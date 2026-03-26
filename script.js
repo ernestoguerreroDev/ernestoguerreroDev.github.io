@@ -1,33 +1,89 @@
-// Esperar a que el contenido cargue completamente
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. Navegación por pestañas (Tabs)
     const buttons = document.querySelectorAll('.nav-btn');
-    const contents = document.querySelectorAll('.tab-content');
+    const sections = {
+        inicio: document.getElementById('inicio'),
+        cursos: document.getElementById('cursos'),
+        herramientas: document.getElementById('herramientas'),
+        'contenido-curso': document.getElementById('contenido-curso'),
+        contacto: document.getElementById('contacto')
+    };
 
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            const target = button.getAttribute('data-tab');
+    // Scroll top button logic
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    if (scrollBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                scrollBtn.classList.add('show');
+            } else {
+                scrollBtn.classList.remove('show');
+            }
+        });
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 
-            // Quitar clase activa de todos los botones y contenidos
-            buttons.forEach(btn => btn.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
+    function activateTab(tabId) {
+        // hide all sections
+        Object.values(sections).forEach(section => {
+            if (section) section.classList.remove('active');
+        });
+        if (sections[tabId]) sections[tabId].classList.add('active');
 
-            // Agregar clase activa al seleccionado
-            button.classList.add('active');
-            document.getElementById(target).classList.add('active');
+        // update active class on buttons
+        buttons.forEach(btn => {
+            if (btn.getAttribute('data-tab') === tabId) {
+                btn.classList.add('active');
+                btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        localStorage.setItem('activeTab', tabId);
+        history.replaceState(null, '', `#${tabId}`);
+    }
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabId = btn.getAttribute('data-tab');
+            if (tabId && sections[tabId]) {
+                activateTab(tabId);
+                // Smooth scroll to main content after tab change
+                const containerTop = document.querySelector('.container').offsetTop;
+                window.scrollTo({ top: Math.max(0, containerTop - 20), behavior: 'smooth' });
+            }
         });
     });
 
-    // 2. Efecto de scroll suave para enlaces
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
+    // handle initial tab: hash > localStorage > default 'inicio'
+    const hash = window.location.hash.slice(1);
+    let savedTab = localStorage.getItem('activeTab');
+    let initialTab = 'inicio';
+    if (hash && sections[hash]) {
+        initialTab = hash;
+    } else if (savedTab && sections[savedTab]) {
+        initialTab = savedTab;
+    }
+    activateTab(initialTab);
+
+    // hash change listener
+    window.addEventListener('hashchange', () => {
+        const newHash = window.location.hash.slice(1);
+        if (newHash && sections[newHash]) {
+            activateTab(newHash);
+            const containerTop = document.querySelector('.container').offsetTop;
+            window.scrollTo({ top: containerTop - 20, behavior: 'smooth' });
+        }
     });
 
-    console.log("Portafolio de Ernesto Guerrero cargado correctamente.");
+    // if there's an initial hash, ensure view is correctly positioned
+    if (window.location.hash) {
+        setTimeout(() => {
+            const containerTop = document.querySelector('.container').offsetTop;
+            if (window.scrollY < 50) {
+                window.scrollTo({ top: containerTop - 20, behavior: 'smooth' });
+            }
+        }, 100);
+    }
 });
