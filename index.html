@@ -3,346 +3,983 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EG Solutions</title>
+    <title>EG Solutions | Python para Ingeniería Petrolera</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="https://i.ibb.co/F448NsqR/LOGO-EG-Solutions.png">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --accent: #ed8936;
+            --bg: #f7fafc;
+            --card: #ffffff;
+            --text: #2d3748;
+            --text-light: #718096;
+            --border: #e2e8f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* Header Minimalista */
+        header {
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .brand img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .brand-text h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .brand-text p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+        
+        /* Navegación */
+        nav {
+            background: var(--card);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+        }
+        
+        .nav-btn {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--accent);
+        }
+        
+        /* Layout Principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-photo {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .hero-content h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2c5282;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Grid de Servicios */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .service-card {
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .service-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .service-card i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+        
+        .service-card h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .service-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* Video */
+        .video-section {
+            margin-top: 2rem;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #000;
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-caption {
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        /* Cursos */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .course-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .course-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .course-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .course-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        .course-title h3 {
+            font-size: 1.125rem;
+            color: var(--primary);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--accent);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            margin-top: 0.25rem;
+        }
+        
+        .course-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .course-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: start;
+            gap: 0.5rem;
+        }
+        
+        .course-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .course-list i {
+            color: var(--accent);
+            margin-top: 0.25rem;
+        }
+        
+        .course-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        /* Herramientas */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tool-card {
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        
+        .tool-header {
+            padding: 1.25rem;
+            background: var(--primary);
+            color: white;
+        }
+        
+        .tool-header i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tool-header h3 {
+            font-size: 1.125rem;
+        }
+        
+        .tool-content {
+            padding: 1.25rem;
+        }
+        
+        .tool-content p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* Curriculum */
+        .curriculum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .module-block {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .module-header {
+            background: var(--bg);
+            padding: 1rem 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .module-block ul {
+            list-style: none;
+            padding: 1rem 1.25rem;
+        }
+        
+        .module-block li {
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            position: relative;
+            padding-left: 1.25rem;
+        }
+        
+        .module-block li::before {
+            content: "•";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+        }
+        
+        .certificate-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            font-weight: 500;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg);
+            border-radius: 12px;
+        }
+        
+        .cta-section p {
+            color: var(--text-light);
+            margin-top: 0.75rem;
+        }
+        
+        /* Contacto */
+        .contact-flex {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .contact-info h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-info > p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-details {
+            margin: 1.5rem 0;
+        }
+        
+        .contact-details div {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+        
+        .contact-details i {
+            color: var(--accent);
+            width: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .contact-form h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .form-note {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 0.75rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.25rem;
+            transition: opacity 0.3s;
+        }
+        
+        .social-icons a:hover {
+            opacity: 0.7;
+        }
+        
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Scroll Top */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+            z-index: 99;
+        }
+        
+        .scroll-top:hover {
+            transform: translateY(-3px);
+            background: #dd6b20;
+        }
+        
+        .scroll-top.visible {
+            display: flex;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .profile-photo {
+                margin: 0 auto;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .contact-flex {
+                grid-template-columns: 1fr;
+            }
+            
+            .course-grid,
+            .tools-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <header>
     <div class="header-content">
-        <div class="logo-title">
-            <img src="https://i.ibb.co/F448NsqR/LOGO-EG-Solutions.png" alt="EG Solutions Logo" class="header-logo">
+        <div class="brand">
+            <img src="https://i.ibb.co/F448NsqR/LOGO-EG-Solutions.png" alt="EG Solutions">
+            <div class="brand-text">
+                <h1>EG Solutions</h1>
+                <p>Ernesto Guerrero | VBA Excel · Python · JS</p>
+            </div>
         </div>
-        <h2 class="blog-name">Ernesto Guerrero</h2>
-        <p class="subtitle">VBA Excel · Python · JS</p>
     </div>
     <nav>
-        <div class="nav-container" id="navContainer">
+        <div class="nav-container">
             <button class="nav-btn active" data-tab="inicio"><i class="fas fa-home"></i> Inicio</button>
             <button class="nav-btn" data-tab="cursos"><i class="fab fa-python"></i> Cursos Python</button>
-            <button class="nav-btn" data-tab="herramientas"><i class="fas fa-toolbox"></i> Herramientas</button>
-            <button class="nav-btn" data-tab="contenido-curso"><i class="fas fa-book-open"></i> Contenido del Curso</button>
-            <button class="nav-btn" data-tab="contacto"><i class="fas fa-calendar-check"></i> Asesorías</button>
+            <button class="nav-btn" data-tab="herramientas"><i class="fas fa-cogs"></i> Herramientas</button>
+            <button class="nav-btn" data-tab="contenido-curso"><i class="fas fa-book"></i> Temario</button>
+            <button class="nav-btn" data-tab="contacto"><i class="fas fa-handshake"></i> Asesorías</button>
         </div>
     </nav>
 </header>
 
 <main class="container">
-    <!-- MI PRESENTACIÓN -->
+    <!-- INICIO -->
     <section id="inicio" class="tab-content active">
-        <div class="card profile-card">
-            <div class="profile-header">
-                <div class="profile-avatar-wrapper">
-                    <img src="https://i.ibb.co/b5nMbJfw/CEO-EG-Solutions.jpg" alt="Ernesto Guerrero" class="profile-photo">
-                </div>
-                <div class="profile-title">
-                    <h2>Ingeniero de Petróleo | Desarrollador</h2>
-                    <p class="intro-text">
-                    <p>
-                    <strong>Ingeniero de Petróleo con +13 años de experiencia</strong> en la industria. Apoyado en la ingeniería informática, dicto cursos para estudiantes y profesionales que buscan <strong>simplificar procesos</strong> mediante la automatización con Python, VBA Excel e Inteligencia Artificial.
-</p>    
+        <div class="card">
+            <div class="hero">
+                <img src="https://i.ibb.co/b5nMbJfw/CEO-EG-Solutions.jpg" alt="Ernesto Guerrero" class="profile-photo">
+                <div class="hero-content">
+                    <h2>Ingeniero de Petróleo +13 años | Desarrollador Python</h2>
+                    <p>Dicto cursos para estudiantes y profesionales que buscan <strong>simplificar procesos</strong> mediante automatización con Python, VBA Excel e Inteligencia Artificial aplicada a la industria petrolera.</p>
                     <div class="hero-buttons">
-                        <a href="#" class="btn-primary" id="ctaCursos"><i class="fab fa-python"></i> Explorar cursos</a>
-                        <a href="#" class="btn-outline" id="ctaAsesoria"><i class="fas fa-calendar-alt"></i> Agendar asesoría</a>
+                        <button class="btn btn-primary" onclick="navigateTo('cursos')">
+                            <i class="fab fa-python"></i> Explorar cursos
+                        </button>
+                        <button class="btn btn-outline" onclick="navigateTo('contacto')">
+                            <i class="fas fa-calendar-alt"></i> Agendar asesoría
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="info-grid">
-                <div class="info-item">
-                    <strong><i class="fas fa-chalkboard-teacher"></i> Asesorías personalizadas</strong>
-                    <p> Desarrollo de algoritmos con <strong>IA</strong>, análisis de datos con <strong>Excel - Python</strong> y creación de dashboards interactivos para estudiantes y profesionales de la industria.</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h3>Asesorías Personalizadas</h3>
+                    <p>Desarrollo de algoritmos con IA, análisis de datos con Excel-Python y dashboards interactivos para la industria.</p>
                 </div>
-                <div class="info-item">
-                    <strong><i class="fas fa-laptop-code"></i> Aprende haciendo"</strong>
-					
-                    <p> Desde fundamentos de <strong>Python</strong> hasta el desarrollo de herramientas de <strong>simulación y visualización</strong>. Con metodología práctica y adaptada al nivel académico y ritmo del participante.</p>
-                
-				</div>
-                <div class="info-item">
-                    <strong><i class="fas fa-microchip"></i> Herramientas Educativas</strong>
-                    <p>Desarrollo de herramientas educativas para el aprendizaje de las cátedras de perforación, producción y yacimientos para estudiantes y profesores.</p>
+                <div class="service-card">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Aprende Haciendo</h3>
+                    <p>Desde fundamentos de Python hasta herramientas de simulación y visualización. Metodología práctica adaptada a tu nivel.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-microchip"></i>
+                    <h3>Herramientas Educativas</h3>
+                    <p>Desarrollo de software para el aprendizaje de perforación, producción y yacimientos.</p>
                 </div>
             </div>
-            <!-- VIDEO ESTRATÉGICO DE PRESENTACIÓN -->
-            <div class="info-item full-width">
-                <strong><i class="fas fa-play-circle"></i> Conoce EG Solutions en acción</strong>
+            
+            <div class="video-section">
+                <h3 style="margin-bottom: 1rem; color: var(--primary);">
+                    <i class="fas fa-play-circle"></i> Conoce EG Solutions
+                </h3>
                 <div class="video-wrapper">
-                    <iframe 
-                        src="https://drive.google.com/file/d/1XHbEN9KKyb48zZ-m0bn28nLU70IDH-AH/preview"
-                        title="Video presentación EG Solutions"s
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
+                    <iframe src="https://drive.google.com/file/d/1XHbEN9KKyb48zZ-m0bn28nLU70IDH-AH/preview" 
+                            allow="autoplay; encrypted-media" 
+                            allowfullscreen>
                     </iframe>
                 </div>
-                <p class="video-caption">¿Eres Estudiante,Ingeniero Consultor ó Instructor? Esta es la oportunidad de entrenamiento para soluciones inteligentes en la era de la IA.</p>
+                <p class="video-caption">¿Eres estudiante, ingeniero consultor o instructor? Entrena para soluciones inteligentes en la era de la IA.</p>
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN CURSOS DE PYTHON -->
-<section id="cursos" class="tab-content">
+    <!-- CURSOS -->
+    <section id="cursos" class="tab-content">
         <div class="card">
-            <h2><i class="fab fa-python"></i> Curso de Python Aplicado a la Ingeniería Petrolera </h2>
-            <div class="activities-grid">
-                
-                <div class="activity-card">
-                    <div class="activity-icon"><i class="fas fa-oil-can"></i></div>
-                    <h3>Python en Ingeniería Petrolera</h3>
-                    <div class="activity-badge">Nivel: Académico - Profesional</div>
-                    
-                    <ul class="activity-list">
-                        <li><i class="fas fa-check-double"></i> <strong>01. Introducción:</strong> Configuración, primer programa y conversión de unidades (Litros, Barriles, Metros).</li>
-                        <li><i class="fas fa-check-double"></i> <strong>02. Variables:</strong> Tipos de datos y cálculo de Porosidad, Permeabilidad y Gravedad API.</li>
-                        <li><i class="fas fa-check-double"></i> <strong>03. Control de Flujo:</strong> Condicionales y bucles aplicados a la Ley de Darcy (Tasa Q).</li>
-                        <li><i class="fas fa-check-double"></i> <strong>04. Funciones:</strong> Definición de parámetros para el cálculo de presión hidrostática.</li>
-                        <li><i class="fas fa-check-double"></i> <strong>05. Manejo de Archivos:</strong> Lectura/escritura de Excel y TXT para resúmenes de producción.</li>
-                        <li><i class="fas fa-check-double"></i> <strong>06. Listas y Diccionarios:</strong> Almacenamiento de datos de pozos y cálculos simples.</li>
-                        <li><i class="fas fa-check-double"></i> <strong>07. Resolución de Problemas:</strong> Cálculo de tasa mediante la ecuación de declinación exponencial.</li>
-                        <li><i class="fas fa-check-double"></i> <strong>08. Proyecto Final:</strong> Simulación de IP, Qo, Qw, GEP y herramientas avanzadas.</li>
+            <h2><i class="fab fa-python"></i> Python Aplicado a la Ingeniería Petrolera</h2>
+            
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-icon"><i class="fas fa-oil-can"></i></div>
+                        <div class="course-title">
+                            <h3>Curso Académico-Profesional</h3>
+                            <span class="badge">8 Módulos + Proyecto Final</span>
+                        </div>
+                    </div>
+                    <ul class="course-list">
+                        <li><i class="fas fa-check"></i> <strong>Fundamentos:</strong> Variables, tipos de datos, conversión de unidades</li>
+                        <li><i class="fas fa-check"></i> <strong>Petrofísica:</strong> Cálculo de Porosidad, Permeabilidad, Gravedad API</li>
+                        <li><i class="fas fa-check"></i> <strong>Flujo:</strong> Condicionales y bucles aplicados a Ley de Darcy</li>
+                        <li><i class="fas fa-check"></i> <strong>Funciones:</strong> Parámetros para presión hidrostática</li>
+                        <li><i class="fas fa-check"></i> <strong>Datos:</strong> Lectura/escritura Excel y TXT para producción</li>
+                        <li><i class="fas fa-check"></i> <strong>Estructuras:</strong> Listas y diccionarios para datos de pozos</li>
+                        <li><i class="fas fa-check"></i> <strong>Problemas:</strong> Ecuación de declinación exponencial</li>
+                        <li><i class="fas fa-check"></i> <strong>Proyecto Final:</strong> Simulación IP, Qo, Qw, GEP</li>
                     </ul>
-
-                    <span class="status ready"><i class="fas fa-clock"></i> 8 Partes · Proyecto Final incluido</span>
-                </div>
-
-                <div class="activity-card">
-                    <div class="activity-icon"><i class="fas fa-laptop-code"></i></div>
-                    <h3>Demostración de Herramientas</h3>
-                    <div class="activity-badge">Proyectos Reales</div>
-                    
-                    <div class="video-container" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
-                        
-                        <div class="video-wrapper">
-                            <p style="font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">1. Dashboard de KPIs y Perforación</p>
-                            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000;">
-                                <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" src="https://www.youtube.com/embed/TU_ID_1" allowfullscreen></iframe>
-                            </div>
-                        </div>
-
-                        <div class="video-wrapper">
-                            <p style="font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">2. EG SOLVER V.2: IPR y Límite Económico</p>
-                            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000;">
-                                <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" src="https://www.youtube.com/embed/TU_ID_2" allowfullscreen></iframe>
-                            </div>
-                        </div>
-
-                        <div class="video-wrapper">
-                            <p style="font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">3. Simulación de Yacimientos y Flujo Fraccional</p>
-                            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000;">
-                                <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" src="https://www.youtube.com/embed/TU_ID_3" allowfullscreen></iframe>
-                            </div>
-                        </div>
-
+                    <div class="course-meta">
+                        <i class="fas fa-clock"></i> 8 Partes · Proyecto Final incluido
                     </div>
                 </div>
 
-                <div class="activity-card">
-                    <div class="activity-icon"><i class="fas fa-video"></i></div>
-                    <h3>Demostración de Proyectos (Demos)</h3>
-                    <div class="activity-badge">Casos de Uso Reales</div>
-                    
-                    <div class="video-item" style="margin-top: 15px;">
-                        <p style="font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;">1. Dashboard de KPIs y Perforación</p>
-                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000;">
-                            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/ID_VIDEO_1" frameborder="0" allowfullscreen></iframe>
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="course-title">
+                            <h3>Advanced Python & Automation</h3>
+                            <span class="badge">Nivel Avanzado</span>
                         </div>
                     </div>
-
-                    <div class="video-item" style="margin-top: 15px;">
-                        <p style="font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;">2. EG SOLVER V.2: IPR y Límite Económico</p>
-                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000;">
-                            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/ID_VIDEO_2" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    </div>
-
-                    <div class="video-item" style="margin-top: 15px;">
-                        <p style="font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;">3. Simulación de Yacimientos y Flujo Fraccional</p>
-                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000;">
-                            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/ID_VIDEO_3" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    </div>
-
-                    <span class="status ready" style="margin-top: 15px;"><i class="fas fa-play"></i> Visualización de herramientas</span>
-                </div>
-                <div class="activity-card">
-                    <div class="activity-icon"><i class="fas fa-chart-line"></i></div>
-                    <h3>Advanced Python for Engineering & Automation</h3>
-                    <div class="activity-badge">Nivel avanzado</div>
-                    <ul class="activity-list">
-                        <li><i class="fas fa-check-double"></i> Simulación de procesos industriales</li>
-                        <li><i class="fas fa-check-double"></i> Desarrollo de herramientas interactivas (Dash/Streamlit)</li>
-                        <li><i class="fas fa-check-double"></i> Pronósticos con regresión y machine learning</li>
-                        <li><i class="fas fa-check-double"></i> API REST y automatización de flujos</li>
-                        <li><i class="fas fa-check-double"></i> Proyecto final: Aplicación web de optimización operacional</li>
+                    <ul class="course-list">
+                        <li><i class="fas fa-check"></i> Simulación de procesos industriales</li>
+                        <li><i class="fas fa-check"></i> Dashboards interactivos (Dash/Streamlit)</li>
+                        <li><i class="fas fa-check"></i> Machine Learning para pronósticos</li>
+                        <li><i class="fas fa-check"></i> APIs REST y automatización</li>
+                        <li><i class="fas fa-check"></i> Proyecto: App web de optimización</li>
                     </ul>
-                    <span class="status ready"><i class="fas fa-star"></i> 32 horas · Certificación incluida</span>
+                    <div class="course-meta">
+                        <i class="fas fa-star"></i> 32 horas · Certificación incluida
+                    </div>
                 </div>
-                <div class="activity-card">
-                    <div class="activity-icon"><i class="fas fa-chalkboard-user"></i></div>
-                    <h3>Mentoría 1:1 / Asesoría Corporativa</h3>
-                    <div class="activity-badge">A medida</div>
-                    <ul class="activity-list">
-                        <li><i class="fas fa-check-double"></i> Diseñamos el plan según tus necesidades</li>
-                        <li><i class="fas fa-check-double"></i> Python aplicado a tu rubro (petróleo, finanzas, logística)</li>
-                        <li><i class="fas fa-check-double"></i> Aceleración de proyectos internos</li>
-                        <li><i class="fas fa-check-double"></i> Seguimiento y acompañamiento continuo</li>
+
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-icon"><i class="fas fa-user-tie"></i></div>
+                        <div class="course-title">
+                            <h3>Mentoría 1:1 Corporativa</h3>
+                            <span class="badge">Personalizado</span>
+                        </div>
+                    </div>
+                    <ul class="course-list">
+                        <li><i class="fas fa-check"></i> Plan de formación a medida</li>
+                        <li><i class="fas fa-check"></i> Python aplicado a tu rubro específico</li>
+                        <li><i class="fas fa-check"></i> Aceleración de proyectos internos</li>
+                        <li><i class="fas fa-check"></i> Seguimiento continuo</li>
                     </ul>
-                    <span class="status pending"><i class="fas fa-calendar-week"></i> Reserva tu sesión</span>
+                    <div class="course-meta">
+                        <i class="fas fa-calendar-week"></i> Reserva tu sesión
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN HERRAMIENTAS DESARROLLADAS (VIDEOS DEMO) -->
+    <!-- HERRAMIENTAS -->
     <section id="herramientas" class="tab-content">
         <div class="card">
-            <h2><i class="fas fa-cogs"></i> Herramientas digitales desarrolladas por EG Solutions</h2>
-            <p class="section-subtitle">Software a medida para optimizar decisiones técnicas y comerciales. Demostraciones prácticas.</p>
+            <h2><i class="fas fa-cogs"></i> Herramientas Digitales Desarrolladas</h2>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">
+                Software a medida para optimizar decisiones técnicas y comerciales en la industria petrolera.
+            </p>
+            
             <div class="tools-grid">
                 <div class="tool-card">
                     <div class="tool-header">
                         <i class="fas fa-chart-simple"></i>
                         <h3>Simulador de Parámetros Operacionales</h3>
                     </div>
-                    <div class="video-wrapper">
-                        <iframe 
-                            src="https://www.youtube.com/embed/IFynGDCdL5c?si=oHvPbYg6cV1jHZ_6"
-                            title="Demo Simulador de Parámetros"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                    <div class="video-wrapper" style="border-radius: 0; height: 200px; padding-bottom: 0;">
+                        <iframe src="https://www.youtube.com/embed/IFynGDCdL5c?si=oHvPbYg6cV1jHZ_6" allowfullscreen></iframe>
                     </div>
-                    <p>Visualización en tiempo real de variables de producción, alertas predictivas y dashboard interactivo. Basado en Python + Dash.</p>
+                    <div class="tool-content">
+                        <p>Visualización en tiempo real de variables de producción, alertas predictivas y dashboard interactivo. Python + Dash.</p>
+                    </div>
                 </div>
+
                 <div class="tool-card">
                     <div class="tool-header">
                         <i class="fas fa-chart-line"></i>
-                        <h3>Analytics Engine: Pronósticos y KPIs</h3>
+                        <h3>Analytics Engine: Pronósticos</h3>
                     </div>
-                    <div class="video-wrapper">
-                        <iframe 
-                            src="https://www.youtube.com/embed/7_C7T_2vepQ?si=2c3qFJ7wL6QyE4vz"
-                            title="Demo Analytics Engine"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                    <div class="video-wrapper" style="border-radius: 0; height: 200px; padding-bottom: 0;">
+                        <iframe src="https://www.youtube.com/embed/7_C7T_2vepQ?si=2c3qFJ7wL6QyE4vz" allowfullscreen></iframe>
                     </div>
-                    <p>Módulo de regresión lineal, series de tiempo y generación automática de informes ejecutivos. Integración con bases de datos SQL.</p>
+                    <div class="tool-content">
+                        <p>Regresión lineal, series de tiempo e informes ejecutivos automáticos. Integración SQL.</p>
+                    </div>
                 </div>
+
                 <div class="tool-card">
                     <div class="tool-header">
                         <i class="fas fa-tachometer-alt"></i>
                         <h3>EG Optimizer Suite</h3>
                     </div>
-                    <div class="video-wrapper">
-                        <iframe 
-                            src="https://www.youtube.com/embed/e7I1i4ZJpNM?si=uE2jJq9cLQ2cG3rX"
-                            title="Demo Optimizer Suite"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                    <div class="video-wrapper" style="border-radius: 0; height: 200px; padding-bottom: 0;">
+                        <iframe src="https://www.youtube.com/embed/e7I1i4ZJpNM?si=uE2jJq9cLQ2cG3rX" allowfullscreen></iframe>
                     </div>
-                    <p>Herramienta de optimización de recursos, simulación de escenarios y recomendaciones basadas en algoritmos de inteligencia artificial.</p>
+                    <div class="tool-content">
+                        <p>Optimización de recursos, simulación de escenarios y recomendaciones con IA.</p>
+                    </div>
                 </div>
             </div>
-            <div class="notice-tools">
-                <i class="fas fa-info-circle"></i> ¿Quieres una versión personalizada para tu empresa? Solicita una demo exclusiva.
+            
+            <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg); border-radius: 8px; display: flex; align-items: center; gap: 0.75rem; color: var(--text-light);">
+                <i class="fas fa-info-circle" style="color: var(--accent);"></i>
+                ¿Necesitas una versión personalizada para tu empresa? <a href="#" onclick="navigateTo('contacto')" style="color: var(--primary); font-weight: 600;">Solicita una demo exclusiva</a>.
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN CONTENIDO DEL CURSO (DETALLE TEMARIO) -->
+    <!-- CONTENIDO DEL CURSO -->
     <section id="contenido-curso" class="tab-content">
         <div class="card">
-            <h2><i class="fas fa-book"></i> Plan de estudios: Python aplicado a Ingeniería y Data Science</h2>
+            <h2><i class="fas fa-book"></i> Plan de Estudios: Python & Data Science</h2>
+            
             <div class="curriculum-grid">
                 <div class="module-block">
-                    <div class="module-header"><i class="fas fa-code"></i> Módulo 1: Fundamentos Sólidos</div>
+                    <div class="module-header">
+                        <i class="fas fa-code"></i> Módulo 1: Fundamentos
+                    </div>
                     <ul>
                         <li>Variables, tipos de datos y estructuras de control</li>
-                        <li>Funciones, manejo de excepciones y módulos</li>
-                        <li>Programación orientada a objetos (POO) aplicada</li>
+                        <li>Funciones, excepciones y módulos</li>
+                        <li>Programación orientada a objetos (POO)</li>
                         <li>Entornos virtuales y buenas prácticas</li>
                     </ul>
                 </div>
+                
                 <div class="module-block">
-                    <div class="module-header"><i class="fas fa-database"></i> Módulo 2: Análisis y Manipulación de Datos</div>
+                    <div class="module-header">
+                        <i class="fas fa-database"></i> Módulo 2: Análisis de Datos
+                    </div>
                     <ul>
                         <li>NumPy: arrays y operaciones vectorizadas</li>
-                        <li>Pandas: limpieza, transformación y agregación de datos</li>
+                        <li>Pandas: limpieza y transformación</li>
                         <li>Visualización: Matplotlib, Seaborn, Plotly</li>
-                        <li>Lectura/escritura de datos (Excel, CSV, SQL, JSON)</li>
+                        <li>Lectura/escritura (Excel, CSV, SQL, JSON)</li>
                     </ul>
                 </div>
+                
                 <div class="module-block">
-                    <div class="module-header"><i class="fas fa-chart-line"></i> Módulo 3: Pronósticos y Modelado</div>
+                    <div class="module-header">
+                        <i class="fas fa-chart-line"></i> Módulo 3: Modelado
+                    </div>
                     <ul>
-                        <li>Regresión lineal, series de tiempo (ARIMA, Prophet)</li>
-                        <li>Introducción a Machine Learning (Scikit-learn)</li>
-                        <li>Evaluación de modelos y métricas de negocio</li>
-                        <li>Proyecto: predicción de demanda operacional</li>
+                        <li>Regresión lineal y series de tiempo</li>
+                        <li>Machine Learning con Scikit-learn</li>
+                        <li>Evaluación de modelos</li>
+                        <li>Proyecto: predicción de demanda</li>
                     </ul>
                 </div>
+                
                 <div class="module-block">
-                    <div class="module-header"><i class="fas fa-laptop"></i> Módulo 4: Desarrollo de Herramientas</div>
+                    <div class="module-header">
+                        <i class="fas fa-laptop"></i> Módulo 4: Desarrollo
+                    </div>
                     <ul>
-                        <li>Creación de dashboards con Streamlit / Dash</li>
-                        <li>Automatización de reportes y correos</li>
-                        <li>APIs con Flask y consumo de servicios externos</li>
-                        <li>Despliegue en la nube (Railway, Heroku, etc.)</li>
+                        <li>Dashboards con Streamlit/Dash</li>
+                        <li>Automatización de reportes</li>
+                        <li>APIs con Flask</li>
+                        <li>Despliegue en la nube</li>
                     </ul>
                 </div>
             </div>
+            
             <div class="certificate-badge">
-                <i class="fas fa-certificate"></i> Al finalizar obtienes certificado avalado por EG Solutions y proyecto final publicado en tu portafolio.
+                <i class="fas fa-certificate"></i>
+                Certificado avalado por EG Solutions + Proyecto final en tu portafolio
             </div>
-            <div class="cta-curso">
-                <a href="#" class="btn-primary btn-large" id="ctaContactoCurso"><i class="fas fa-graduation-cap"></i> Inscríbete ahora</a>
+            
+            <div class="cta-section">
+                <button class="btn btn-primary btn-large" onclick="navigateTo('contacto')" style="font-size: 1.125rem; padding: 1rem 2rem;">
+                    <i class="fas fa-graduation-cap"></i> Inscríbete Ahora
+                </button>
                 <p>Próxima cohorte: Abril 2026 · Clases en vivo + grabaciones · Soporte 24/7</p>
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN CONTACTO Y ASESORÍAS -->
+    <!-- CONTACTO -->
     <section id="contacto" class="tab-content">
-        <div class="card contact-card">
+        <div class="card">
             <div class="contact-flex">
                 <div class="contact-info">
-                    <h2><i class="fas fa-handshake"></i> Asesorías personalizadas y contacto directo</h2>
-                    <p>¿Necesitas un plan de formación a medida, desarrollo de una herramienta específica o mentoría ejecutiva? Cuéntame tu objetivo y te responderé en menos de 24 horas.</p>
+                    <h2><i class="fas fa-handshake"></i> Asesorías Personalizadas</h2>
+                    <p>¿Necesitas un plan de formación a medida, desarrollo de herramientas o mentoría ejecutiva? Cuéntame tu objetivo.</p>
+                    
                     <div class="contact-details">
                         <div><i class="fas fa-envelope"></i> ernesto.guerrero@egsolutions.com</div>
                         <div><i class="fab fa-whatsapp"></i> +58 412 123 4567</div>
                         <div><i class="fab fa-linkedin"></i> /in/ernesto-guerrero-a9877a163</div>
                     </div>
-                    <div class="social-icons-contact">
+                    
+                    <div class="social-links">
                         <a href="https://www.linkedin.com/in/ernesto-guerrero-a9877a163" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                         <a href="#"><i class="fab fa-github"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
+                
                 <div class="contact-form">
-                    <h3>Solicita información o agenda tu asesoría</h3>
-                    <form id="contactForm" action="#" method="post">
-                        <input type="text" placeholder="Nombre completo" required>
-                        <input type="email" placeholder="Correo electrónico" required>
-                        <input type="text" placeholder="Teléfono / WhatsApp">
-                        <select required>
-                            <option value="" disabled selected>¿Qué te interesa?</option>
-                            <option>Curso de Python (Fundamentos)</option>
-                            <option>Curso avanzado de ingeniería</option>
-                            <option>Desarrollo de herramienta personalizada</option>
-                            <option>Asesoría corporativa / 1:1</option>
-                        </select>
-                        <textarea rows="3" placeholder="Cuéntame tu proyecto o consulta..."></textarea>
-                        <button type="submit" class="btn-primary btn-block"><i class="fas fa-paper-plane"></i> Enviar mensaje</button>
-                        <p class="form-note">Recibirás un correo de confirmación y en breve nos pondremos en contacto.</p>
+                    <h3>Solicita Información</h3>
+                    <form id="contactForm" onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <input type="text" placeholder="Nombre completo" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="Teléfono / WhatsApp">
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="" disabled selected>¿Qué te interesa?</option>
+                                <option>Curso Python Fundamentos</option>
+                                <option>Curso Avanzado de Ingeniería</option>
+                                <option>Desarrollo de Herramienta Personalizada</option>
+                                <option>Asesoría Corporativa 1:1</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea rows="4" placeholder="Cuéntame tu proyecto o consulta..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-paper-plane"></i> Enviar Mensaje
+                        </button>
+                        <p class="form-note">Respuesta en menos de 24 horas.</p>
                     </form>
                 </div>
             </div>
@@ -353,40 +990,67 @@
 <footer>
     <div class="footer-content">
         <div class="social-icons">
-            <a href="https://www.linkedin.com/in/ernesto-guerrero-a9877a163" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#" aria-label="Correo"><i class="fas fa-envelope"></i></a>
+            <a href="https://www.linkedin.com/in/ernesto-guerrero-a9877a163" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
         </div>
-        <p>Ernesto Guerrero | EG Solutions – Transformación digital con Python, Data Science y Gerencia Estratégica</p>
-        <p class="copyright">© 2026 EG Solutions – Todos los derechos reservados | Blog Profesional</p>
+        <p><strong>EG Solutions</strong> — Transformación digital con Python, Data Science y Gerencia Estratégica</p>
+        <p class="copyright">© 2026 Ernesto Guerrero. Todos los derechos reservados.</p>
     </div>
 </footer>
 
-<button class="scroll-top" id="scrollTopBtn" aria-label="Volver arriba">
+<button class="scroll-top" id="scrollTopBtn" onclick="scrollToTop()">
     <i class="fas fa-arrow-up"></i>
 </button>
 
-<script src="script.js"></script>
 <script>
-    // pequeños helpers para evitar que el envío del formulario recargue
-    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+    // Navegación por tabs
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabId = btn.dataset.tab;
+            navigateTo(tabId);
+        });
+    });
+    
+    function navigateTo(tabId) {
+        // Actualizar botones
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if(btn.dataset.tab === tabId) btn.classList.add('active');
+        });
+        
+        // Actualizar contenido
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById(tabId).classList.add('active');
+        
+        // Scroll al top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // Formulario
+    function handleSubmit(e) {
         e.preventDefault();
         alert('Gracias por contactarte. Pronto recibirás respuesta de EG Solutions.');
         e.target.reset();
+    }
+    
+    // Scroll Top Button
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            scrollBtn.classList.add('visible');
+        } else {
+            scrollBtn.classList.remove('visible');
+        }
     });
-    // Botones de navegación rápida desde los CTAs
-    document.getElementById('ctaCursos')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelector('.nav-btn[data-tab="cursos"]').click();
-    });
-    document.getElementById('ctaAsesoria')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelector('.nav-btn[data-tab="contacto"]').click();
-    });
-    document.getElementById('ctaContactoCurso')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelector('.nav-btn[data-tab="contacto"]').click();
-    });
+    
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 </script>
+
 </body>
 </html>
