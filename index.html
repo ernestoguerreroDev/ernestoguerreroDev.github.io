@@ -6,7 +6,6 @@
     <title>EG Solutions</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="https://i.ibb.co/F448NsqR/LOGO-EG-Solutions.png">
     <style>
         /* Estilos adicionales */
@@ -182,6 +181,31 @@
         .details-block a:hover {
             text-decoration: underline;
         }
+        /* Barra de estadísticas (fecha y visitas) */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 60px;
+            padding: 0.6rem 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(249,115,22,0.2);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .current-date, .visitor-counter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #1e293b;
+        }
+        .current-date i, .visitor-counter i {
+            color: #f97316;
+        }
         @media (max-width: 640px) {
             .module-card {
                 flex-direction: column;
@@ -199,6 +223,31 @@
             .tools-videos-grid {
                 grid-template-columns: 1fr;
             }
+            .stats-bar {
+                justify-content: center;
+                text-align: center;
+                border-radius: 28px;
+                gap: 0.5rem;
+            }
+            .course-vision p {
+                font-size: 0.95rem;
+            }
+            .module-title {
+                font-size: 1rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .stats-bar {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .card {
+                padding: 1rem;
+            }
+            .info-item {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
@@ -215,8 +264,8 @@
     <nav>
         <div class="nav-container" id="navContainer">
             <button class="nav-btn active" data-tab="inicio"><i class="fas fa-home"></i> Inicio</button>
-         <button class="nav-btn" data-tab="cursos">📒 💻 &nbsp;Cursos</button>
-            <button class="nav-btn" data-tab="herramientas"><i class="fas fa-toolbox"></i>Herramientas</button>
+            <button class="nav-btn" data-tab="cursos"><i class="fas fa-graduation-cap"></i> Cursos</button>
+            <button class="nav-btn" data-tab="herramientas"><i class="fas fa-toolbox"></i> Herramientas</button>
             <button class="nav-btn" data-tab="contenido-curso"><i class="fas fa-book-open"></i> Contenido del Curso</button>
             <button class="nav-btn" data-tab="contacto"><i class="fas fa-calendar-check"></i> Asesorías</button>
         </div>
@@ -226,6 +275,11 @@
 <main class="container">
     <!-- INICIO -->
     <section id="inicio" class="tab-content active">
+        <!-- Barra de fecha y visitas -->
+        <div class="stats-bar">
+            <div class="current-date"><i class="far fa-calendar-alt"></i> <span id="currentDate"></span></div>
+            <div class="visitor-counter"><i class="fas fa-eye"></i> Visitas: <span id="visitorCount">--</span></div>
+        </div>
         <div class="card profile-card">
             <div class="profile-header">
                 <div class="profile-avatar-wrapper">
@@ -277,12 +331,10 @@
         <div class="card">
             <h2><i class="fab fa-python"></i> Curso de Python para Ingeniería Petrolera</h2>
 
-            <!-- Visión general -->
             <div class="course-vision">
                 <p><i class="fas fa-bullseye"></i> <strong>Visión del curso:</strong> Proveer una base sólida en Python, ideal para estudiantes y profesores que empiezan con la digitalización desde cálculos básicos hasta un nivel avanzado, aplicados en las diferentes áreas de la ingeniería petrolera: Perforación, Producción, Yacimientos con algoritmos para análisis de Datos y herramientas funcionales de forma interactiva para lograr un enfoque académico y profesional.</p>
             </div>
 
-            <!-- 8 módulos -->
             <div class="modules-showcase">
                 <div class="module-card">
                     <div class="module-number">01</div>
@@ -344,22 +396,19 @@
                     <div class="module-number">08</div>
                     <div class="module-content">
                         <div class="module-title">Proyecto Final + Simulación con las herramientas</div>
-                        <div class="module-desc">Crear un script en Python para calcular el Índice de Productividad (IP), la tasa neta de producción de petróleo (Qo) y agua (Qw), además de determinar la Gravedad API de un crudo a partir de la gravedad específica (GEP).</div>
+                        <div class="module-desc">Crear un script en Python para calcular el índice de Productividad (IP), la tasa neta de producción de petróleo (Qo) y agua (Qw), además de determinar la Gravedad API de un crudo a partir de la gravedad específica (GEP).</div>
                         <div class="module-example"><i class="fas fa-microchip"></i> Simulación con las herramientas de perforación, producción y yacimientos.</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Badge herramientas -->
             <div class="simulation-badge" style="background: linear-gradient(135deg, #0b2b4f 0%, #1a4d7a 100%); color: white; border-radius: 16px; padding: 1rem 1.5rem; margin: 1rem 0 1.8rem; text-align: center;">
                 <i class="fas fa-cogs" style="font-size: 1.8rem; margin-right: 0.5rem; vertical-align: middle;"></i>
                 <span style="font-weight: 700; font-size: 1.1rem;">+ Las 3 herramientas de simulación de Parámetros de perforación, Producción y Yacimientos</span>
                 <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">Desarrolla e integra tus propias herramientas interactivas durante el curso</p>
             </div>
 
-            <!-- Videos + descripciones detalladas (con enlaces de Google Drive) -->
             <div class="tools-videos-grid">
-                <!-- Herramienta 1: Perforación -->
                 <div class="video-tool-card">
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1jhgpWBX2nZvjjQVExM7UwkIOtwKyiZk2/preview" title="Simulador de Perforación" frameborder="0" allowfullscreen></iframe>
@@ -371,7 +420,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Herramienta 2: Producción -->
                 <div class="video-tool-card">
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1kqQEu33Lf6GZzJ07xyIwTr5AFmXeBu9S/preview" title="Simulador de Producción" frameborder="0" allowfullscreen></iframe>
@@ -383,7 +431,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Herramienta 3: Yacimientos -->
                 <div class="video-tool-card">
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1r3XllEN6EjsMzGvIKumuqO0Cj4X0R4DN/preview" title="Simulador de Yacimientos" frameborder="0" allowfullscreen></iframe>
@@ -397,13 +444,11 @@
                 </div>
             </div>
 
-            <!-- Detalles del curso -->
             <div class="course-details">
                 <div class="details-grid">
                     <div class="details-block">
                         <h4><i class="fas fa-video"></i> Modalidad</h4>
-                        <p>📍 Online por Google Meet<br>
-                        🗓️ Horario: Lunes a Sábado | 18:00 – 20:00 (Hora Venezuela)</p>
+                        <p>📹 Online por Google Meet<br>⏰ Horario: Lunes a Sábado | 18:00 – 20:00 (Hora Venezuela)</p>
                     </div>
                     <div class="details-block">
                         <h4><i class="fas fa-laptop-code"></i> Herramientas a utilizar</h4>
@@ -411,26 +456,25 @@
                             <li>💻 Laptop</li>
                             <li>📝 Editor de código: NotePad++ / Visual Studio Code</li>
                             <li>🤖 Gemini AI</li>
-                            <li>⚙️ Copilot</li>
+                            <li>👨‍💻 Copilot</li>
                             <li>🐍 Trinket</li>
                         </ul>
                     </div>
                     <div class="details-block">
                         <h4><i class="fas fa-envelope"></i> Más información</h4>
                         <p>📱 WhatsApp: <a href="https://wa.me/584125183359" target="_blank">+58 412-5183359</a><br>
-                        📧 Email: <a href="mailto:ernestoguerrero998@gmail.com">ernestoguerrero998@gmail.com</a></p>
+                        ✉️ Email: <a href="mailto:ernestoguerrero998@gmail.com">ernestoguerrero998@gmail.com</a></p>
                     </div>
                 </div>
             </div>
 
-            <!-- Valor agregado -->
             <div style="margin-top: 1rem; background: #eef2ff; border-radius: 20px; padding: 1rem 1.5rem; text-align: center;">
                 <i class="fas fa-gem"></i> <strong>Valor agregado:</strong> Se entregan los 3 proyectos en backend y frontend (perforación, producción, yacimientos) para que el participante pueda ejecutarlos y aplicarlos a su caso de estudio.
             </div>
         </div>
     </section>
 
-    <!-- HERRAMIENTAS (también actualizadas con los mismos videos de Drive) -->
+    <!-- HERRAMIENTAS -->
     <section id="herramientas" class="tab-content">
         <div class="card">
             <h2><i class="fas fa-cogs"></i> Herramientas digitales desarrolladas</h2>
@@ -473,10 +517,10 @@
         </div>
     </section>
 
-    <!-- CONTENIDO DEL CURSO (sin cambios) -->
+    <!-- CONTENIDO DEL CURSO -->
     <section id="contenido-curso" class="tab-content">
         <div class="card">
-            <h2><i class="fas fa-book"></i> Plan de estudios: Python e Ingeniería</h2>
+            <h2><i class="fas fa-book"></i> Python-JS Avanzado</h2>
             <div class="curriculum-grid">
                 <div class="module-block">
                     <div class="module-header"><i class="fas fa-code"></i> Módulo 1: Fundamentos</div>
@@ -493,7 +537,7 @@
                         <li>NumPy: arrays y operaciones vectorizadas</li>
                         <li>Pandas: limpieza, transformación y agregación</li>
                         <li>Visualización: Matplotlib, Seaborn, Plotly</li>
-                        <li>Lectura/escritura (Excel, CSV, SQL, JSON)</li>
+                        <li>Lectura/escritura (Excel,CSV, JSON)</li>
                     </ul>
                 </div>
                 <div class="module-block">
@@ -516,16 +560,16 @@
                 </div>
             </div>
             <div class="certificate-badge">
-                <i class="fas fa-certificate"></i> Certificado avalado por EG Solutions + proyecto final en tu portafolio.
+                <i class="fas fa-certificate"></i> Proyectos Totalmente Personalizados.
             </div>
             <div class="cta-curso">
                 <a href="#" class="btn-primary btn-large" id="ctaContactoCurso"><i class="fas fa-graduation-cap"></i> Inscríbete ahora</a>
-                <p>Próxima cohorte: Abril 2026 · Clases en vivo + grabaciones · Soporte 24/7</p>
+                <p>Próximas Actividades: Abril 2026 · Clases por Zoom o Google Meet + Soporte</p>
             </div>
         </div>
     </section>
 
-    <!-- CONTACTO (sin cambios) -->
+    <!-- CONTACTO -->
     <section id="contacto" class="tab-content">
         <div class="card contact-card">
             <div class="contact-flex">
@@ -545,20 +589,20 @@
                 </div>
                 <div class="contact-form">
                     <h3>Solicita información</h3>
-                    <form id="contactForm" action="#" method="post">
-                        <input type="text" placeholder="Nombre completo" required>
-                        <input type="email" placeholder="Correo electrónico" required>
-                        <input type="text" placeholder="Teléfono / WhatsApp">
-                        <select required>
-                            <option value="" disabled selected>¿Qué te interesa?</option>
+                    <form id="contactForm">
+                        <input type="text" name="nombre" placeholder="Nombre completo" required>
+                        <input type="email" name="email" placeholder="Correo electrónico" required>
+                        <input type="text" name="telefono" placeholder="Teléfono / WhatsApp">
+                        <select name="interes" required>
+                            <option value="" disabled selected>📌 ¿Qué te interesa?</option>
                             <option>Curso de Python (Fundamentos)</option>
                             <option>Curso avanzado de ingeniería</option>
                             <option>Desarrollo de herramienta personalizada</option>
-                            <option>Asesoría corporativa / 1:1</option>
+                            <option>Asesorías Personalizadas</option>
                         </select>
-                        <textarea rows="3" placeholder="Cuéntame tu proyecto..."></textarea>
+                        <textarea name="mensaje" rows="3" placeholder="Cuéntame tu proyecto..."></textarea>
                         <button type="submit" class="btn-primary btn-block"><i class="fas fa-paper-plane"></i> Enviar mensaje</button>
-                        <p class="form-note">Te responderé en menos de 24 horas.</p>
+                        <p class="form-note" id="formFeedback"></p>
                     </form>
                 </div>
             </div>
@@ -573,8 +617,8 @@
             <a href="#"><i class="fab fa-github"></i></a>
             <a href="#"><i class="fas fa-envelope"></i></a>
         </div>
-        <p>Ernesto Guerrero | EG Solutions – Transformación digital con Python, Data Science y Gerencia Estratégica</p>
-        <p class="copyright">© 2026 EG Solutions – Todos los derechos reservados</p>
+        <p>Transformación digital - Data Science </p>
+        <p class="copyright">© 2026 Ing. Ernesto Guerrero – Todos los derechos reservados</p>
     </div>
 </footer>
 
@@ -582,6 +626,145 @@
     <i class="fas fa-arrow-up"></i>
 </button>
 
-<script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // ---------- FECHA DINÁMICA EN ESPAÑOL ----------
+        function formatCurrentDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            let fecha = now.toLocaleDateString('es-ES', options);
+            fecha = fecha.charAt(0).toUpperCase() + fecha.slice(1);
+            document.getElementById('currentDate').textContent = fecha;
+        }
+        formatCurrentDate();
+
+        // ---------- CONTADOR DE VISITAS (countapi.xyz) ----------
+        const VISITOR_KEY = 'egsolutions_visit_count';
+        const COUNTER_NAMESPACE = 'egsolutions.visit';
+        async function updateVisitorCounter() {
+            try {
+                const visited = sessionStorage.getItem(VISITOR_KEY);
+                if (!visited) {
+                    // Incrementar contador global
+                    const response = await fetch(`https://api.countapi.xyz/hit/${COUNTER_NAMESPACE}/visits`);
+                    const data = await response.json();
+                    const count = data.value;
+                    document.getElementById('visitorCount').innerText = count;
+                    sessionStorage.setItem(VISITOR_KEY, 'true');
+                } else {
+                    // Solo obtener el valor actual sin incrementar
+                    const response = await fetch(`https://api.countapi.xyz/get/${COUNTER_NAMESPACE}/visits`);
+                    const data = await response.json();
+                    const count = data.value || 0;
+                    document.getElementById('visitorCount').innerText = count;
+                }
+            } catch (error) {
+                console.warn('No se pudo obtener el contador de visitas', error);
+                document.getElementById('visitorCount').innerText = '?';
+            }
+        }
+        updateVisitorCounter();
+
+        // ---------- FORMULARIO DE CONTACTO (Envío a ernestoguerrero998@gmail.com) ----------
+        const contactForm = document.getElementById('contactForm');
+        const feedbackSpan = document.getElementById('formFeedback');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(contactForm);
+                const data = Object.fromEntries(formData.entries());
+                // Añadir campos extra para mayor claridad
+                data._subject = "Nuevo mensaje desde EG Solutions Portfolio";
+                data._template = "table";
+
+                try {
+                    const response = await fetch('https://formsubmit.co/ajax/ernestoguerrero998@gmail.com', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    if (response.ok) {
+                        feedbackSpan.innerHTML = '<span style="color: #16a34a;">✅ Mensaje enviado correctamente. Me pondré en contacto contigo pronto.</span>';
+                        contactForm.reset();
+                    } else {
+                        throw new Error('Error en el envío');
+                    }
+                } catch (error) {
+                    feedbackSpan.innerHTML = '<span style="color: #dc2626;">❌ Hubo un error. Por favor intenta de nuevo o escríbeme directamente a ernestoguerrero998@gmail.com</span>';
+                }
+            });
+        }
+
+        // ---------- FUNCIONALIDAD DE PESTAÑAS (YA EXISTENTE, MANTENEMOS Y MEJORAMOS) ----------
+        const buttons = document.querySelectorAll('.nav-btn');
+        const sections = {
+            inicio: document.getElementById('inicio'),
+            cursos: document.getElementById('cursos'),
+            herramientas: document.getElementById('herramientas'),
+            'contenido-curso': document.getElementById('contenido-curso'),
+            contacto: document.getElementById('contacto')
+        };
+
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        if (scrollBtn) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) scrollBtn.classList.add('show');
+                else scrollBtn.classList.remove('show');
+            });
+            scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+
+        function activateTab(tabId) {
+            Object.values(sections).forEach(section => section?.classList.remove('active'));
+            if (sections[tabId]) sections[tabId].classList.add('active');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.classList.add('active');
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                } else btn.classList.remove('active');
+            });
+            localStorage.setItem('activeTab', tabId);
+            history.replaceState(null, '', `#${tabId}`);
+        }
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                if (tabId && sections[tabId]) {
+                    activateTab(tabId);
+                    const containerTop = document.querySelector('.container').offsetTop;
+                    window.scrollTo({ top: Math.max(0, containerTop - 20), behavior: 'smooth' });
+                }
+            });
+        });
+
+        const hash = window.location.hash.slice(1);
+        let savedTab = localStorage.getItem('activeTab');
+        let initialTab = 'inicio';
+        if (hash && sections[hash]) initialTab = hash;
+        else if (savedTab && sections[savedTab]) initialTab = savedTab;
+        activateTab(initialTab);
+
+        window.addEventListener('hashchange', () => {
+            const newHash = window.location.hash.slice(1);
+            if (newHash && sections[newHash]) {
+                activateTab(newHash);
+                const containerTop = document.querySelector('.container').offsetTop;
+                window.scrollTo({ top: containerTop - 20, behavior: 'smooth' });
+            }
+        });
+
+        // ---------- BOTONES DE ACCIÓN (CTA) ----------
+        const ctaCursos = document.getElementById('ctaCursos');
+        const ctaAsesoria = document.getElementById('ctaAsesoria');
+        const ctaDemo = document.getElementById('ctaDemo');
+        const ctaContactoCurso = document.getElementById('ctaContactoCurso');
+
+        if (ctaCursos) ctaCursos.addEventListener('click', (e) => { e.preventDefault(); activateTab('cursos'); });
+        if (ctaAsesoria) ctaAsesoria.addEventListener('click', (e) => { e.preventDefault(); activateTab('contacto'); });
+        if (ctaDemo) ctaDemo.addEventListener('click', (e) => { e.preventDefault(); activateTab('contacto'); });
+        if (ctaContactoCurso) ctaContactoCurso.addEventListener('click', (e) => { e.preventDefault(); activateTab('contacto'); });
+    });
+</script>
 </body>
 </html>
