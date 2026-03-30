@@ -604,9 +604,9 @@
             <a href="#"><i class="fab fa-github"></i></a>
             <a href="mailto:ernestoguerrero998@gmail.com"><i class="fas fa-envelope"></i></a>
         </div>
-        <!-- CONTADOR DE VISITAS y fecha pequeña opcional -->
+        <!-- CONTADOR DE VISITAS con formato "Visitante N°: X" sin texto extra -->
         <div class="visitor-counter-footer">
-            <i class="fas fa-eye"></i> Visitas totales: <strong id="visitCounter">--</strong>
+            <span id="visitCounterDisplay">Visitante N°: --</span>
         </div>
         <p>Transformación digital - Data Science</p>
         <p class="copyright">© 2026 Ing. Ernesto Guerrero - Todos los derechos reservados</p>
@@ -623,17 +623,16 @@
         const now = new Date();
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         let fechaStr = now.toLocaleDateString('es-ES', options);
-        // Capitalizar primera letra del día
         fechaStr = fechaStr.charAt(0).toUpperCase() + fechaStr.slice(1);
         const dateSpan = document.getElementById('currentDateSpan');
         if(dateSpan) dateSpan.textContent = fechaStr;
     }
     setCurrentDate();
 
-    // 2. Contador de visitas usando CountAPI (persistente)
+    // 2. Contador de visitas con formato "Visitante N°: X" (sin "local", sin "Visitas totales")
     async function updateVisitCounter() {
-        const counterSpan = document.getElementById('visitCounter');
-        if(!counterSpan) return;
+        const containerSpan = document.getElementById('visitCounterDisplay');
+        if(!containerSpan) return;
         const namespace = 'egsolutions_blog_pet';
         const key = 'visits_total_v2';
         const url = `https://api.countapi.xyz/hit/${namespace}/${key}`;
@@ -641,17 +640,18 @@
             const response = await fetch(url);
             const data = await response.json();
             if(data && typeof data.value === 'number') {
-                counterSpan.innerText = data.value.toLocaleString();
+                containerSpan.innerText = `Visitante N°: ${data.value.toLocaleString()}`;
             } else {
-                throw new Error('Formato inesperado');
+                throw new Error('Fallback');
             }
         } catch (err) {
-            console.warn("Usando contador local alternativo");
+            console.warn("Usando contador local sin etiqueta adicional");
             let visits = localStorage.getItem('eg_visits_fallback');
             if(visits === null) visits = 1;
             else visits = parseInt(visits) + 1;
             localStorage.setItem('eg_visits_fallback', visits);
-            counterSpan.innerText = visits.toLocaleString() + " (local)";
+            // Mostrar solo el número, sin texto "local"
+            containerSpan.innerText = `Visitante N°: ${visits.toLocaleString()}`;
         }
     }
     updateVisitCounter();
