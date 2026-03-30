@@ -15,9 +15,7 @@ function setCurrentDate() {
     }
 }
 
-// Ejecutar al cargar
 setCurrentDate();
-// Actualizar cada 24h por si cambia el día
 setInterval(setCurrentDate, 86400000);
 
 // ==================== CONTADOR DE VISITAS con emoji ====================
@@ -25,12 +23,9 @@ async function updateVisitCounter() {
     const containerSpan = document.getElementById('visitCounterDisplay');
     if (!containerSpan) return;
 
-    // El emoji ya está en el HTML, pero por si acaso lo forzamos
     const emoji = '👤 ';
-    const defaultText = `${emoji}Visitante N°: --`;
-
     const namespace = 'egsolutions_blog_pet';
-    const key = 'visits_total_v4'; // Nueva clave para evitar caché
+    const key = 'visits_total_v4';
     const url = `https://api.countapi.xyz/hit/${namespace}/${key}`;
 
     try {
@@ -57,7 +52,7 @@ async function updateVisitCounter() {
 
 updateVisitCounter();
 
-// ==================== NAVEGACIÓN POR TABS (pestañas) ====================
+// ==================== NAVEGACIÓN POR TABS ====================
 const tabs = document.querySelectorAll('.nav-btn');
 const sections = {
     inicio: document.getElementById('inicio'),
@@ -151,12 +146,21 @@ if (scrollBtn) {
     });
 }
 
-// ==================== FORMULARIO ====================
+// ==================== FORMULARIO SIMPLIFICADO ====================
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('Gracias por tu mensaje. Te contactaré a la brevedad.');
+        const name = document.getElementById('contactName')?.value.trim();
+        const email = document.getElementById('contactEmail')?.value.trim();
+
+        if (!name || !email) {
+            alert('Por favor completa tu nombre y correo electrónico.');
+            return;
+        }
+
+        // Simulación de envío: mostramos un mensaje de agradecimiento
+        alert(`¡Gracias ${name}! Hemos recibido tu mensaje. Te contactaré a la brevedad al correo ${email}.`);
         contactForm.reset();
     });
 }
