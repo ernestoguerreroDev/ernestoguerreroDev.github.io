@@ -2,12 +2,205 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>EG Solutions</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="https://i.ibb.co/F448NsqR/LOGO-EG-Solutions.png">
+    <style>
+        /* Estilos adicionales */
+        .course-vision {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e6f4ff 100%);
+            border-radius: 24px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            border-left: 6px solid #0b5e7e;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .course-vision p {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: #0a2b3e;
+            margin: 0;
+        }
+        .course-vision i {
+            color: #0b5e7e;
+            margin-right: 10px;
+            font-size: 1.6rem;
+            vertical-align: middle;
+        }
+        .modules-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0 2rem;
+        }
+        .module-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1rem 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.25s ease;
+            border: 1px solid #eef2f6;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .module-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.15);
+            border-color: #cbdff2;
+        }
+        .module-number {
+            background: #0b2b4f;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .module-content {
+            flex: 1;
+        }
+        .module-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f2f4f;
+            margin-bottom: 0.25rem;
+        }
+        .module-desc {
+            color: #2c3e50;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .module-example {
+            background: #f8fafc;
+            padding: 0.5rem 0.8rem;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            color: #1e4663;
+            border-left: 3px solid #2c7da0;
+            margin-top: 0.5rem;
+        }
+        .module-example i {
+            margin-right: 6px;
+            color: #2c7da0;
+        }
+        .tools-videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0 0.5rem;
+        }
+        .video-tool-card {
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e9edf2;
+            display: flex;
+            flex-direction: column;
+        }
+        .video-tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-tool-card .tool-info {
+            padding: 1rem 1.2rem 1.5rem;
+            flex: 1;
+        }
+        .video-tool-card h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0 0 0.75rem;
+            color: #0b2b4f;
+        }
+        .video-tool-card .tool-description {
+            font-size: 0.9rem;
+            color: #2c3e50;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .course-details {
+            background: #f9fafc;
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin: 2rem 0 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        .details-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: space-between;
+        }
+        .details-block {
+            flex: 1;
+            min-width: 200px;
+        }
+        .details-block h4 {
+            color: #0b2b4f;
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        .details-block ul {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+        .details-block li {
+            margin-bottom: 0.25rem;
+        }
+        .details-block a {
+            color: #1e6f9f;
+            text-decoration: none;
+        }
+        .details-block a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 640px) {
+            .module-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .module-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            .details-grid {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .tools-videos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -17,13 +210,13 @@
             <img src="https://i.ibb.co/F448NsqR/LOGO-EG-Solutions.png" alt="EG Solutions Logo" class="header-logo">
         </div>
         <h2 class="blog-name">Ernesto Guerrero</h2>
-        <p class="subtitle">VBA Excel • Python • JS</p>
+        <p class="subtitle">VBA Excel ﹞ Python ﹞ JS</p>
     </div>
     <nav>
         <div class="nav-container" id="navContainer">
             <button class="nav-btn active" data-tab="inicio"><i class="fas fa-home"></i> Inicio</button>
-            <button class="nav-btn" data-tab="cursos">🎓 Cursos</button>
-            <button class="nav-btn" data-tab="herramientas"><i class="fas fa-toolbox"></i>Herramientas</button>
+            <button class="nav-btn" data-tab="cursos"><i class="fas fa-graduation-cap"></i> Cursos</button>
+            <button class="nav-btn" data-tab="herramientas"><i class="fas fa-toolbox"></i> Herramientas</button>
             <button class="nav-btn" data-tab="contenido-curso"><i class="fas fa-book-open"></i> Contenido del Curso</button>
             <button class="nav-btn" data-tab="contacto"><i class="fas fa-calendar-check"></i> Asesorías</button>
         </div>
@@ -33,18 +226,6 @@
 <main class="container">
     <!-- INICIO -->
     <section id="inicio" class="tab-content active">
-        <!-- Fecha y Visitantes -->
-        <div class="info-bar">
-            <div class="date-display" id="currentDate">
-                <i class="fas fa-calendar-day"></i>
-                <span id="dateText">Cargando fecha...</span>
-            </div>
-            <div class="visitor-counter">
-                <i class="fas fa-eye"></i>
-                <span id="visitorCount">0</span> visitas
-            </div>
-        </div>
-
         <div class="card profile-card">
             <div class="profile-header">
                 <div class="profile-avatar-wrapper">
@@ -221,17 +402,17 @@
                 <div class="details-grid">
                     <div class="details-block">
                         <h4><i class="fas fa-video"></i> Modalidad</h4>
-                        <p>💻 Online por Google Meet<br>
-                        🕕 Horario: Lunes a Sábado | 18:00 – 20:00 (Hora Venezuela)</p>
+                        <p>📹 Online por Google Meet<br>
+                        🕒 Horario: Lunes a Sábado | 18:00 – 20:00 (Hora Venezuela)</p>
                     </div>
                     <div class="details-block">
                         <h4><i class="fas fa-laptop-code"></i> Herramientas a utilizar</h4>
                         <ul>
                             <li>💻 Laptop</li>
-                            <li>📝 Editor de código: NotePad++ / Visual Studio Code</li>
+                            <li>✍️ Editor de código: NotePad++ / Visual Studio Code</li>
                             <li>🤖 Gemini AI</li>
-                            <li>🤖 Copilot</li>
-                            <li>🌐 Trinket</li>
+                            <li>🧠 Copilot</li>
+                            <li>📦 Trinket</li>
                         </ul>
                     </div>
                     <div class="details-block">
@@ -312,7 +493,7 @@
                         <li>NumPy: arrays y operaciones vectorizadas</li>
                         <li>Pandas: limpieza, transformación y agregación</li>
                         <li>Visualización: Matplotlib, Seaborn, Plotly</li>
-                        <li>Lectura/escritura (Excel,CSV, JSON)</li>
+                        <li>Lectura/escritura (Excel, CSV, JSON)</li>
                     </ul>
                 </div>
                 <div class="module-block">
@@ -339,7 +520,7 @@
             </div>
             <div class="cta-curso">
                 <a href="#" class="btn-primary btn-large" id="ctaContactoCurso"><i class="fas fa-graduation-cap"></i> Inscríbete ahora</a>
-                <p>Próximas Actividades: Abril 2026 — Clases por Zoom o Google Meet + Soporte</p>
+                <p>Próximas Actividades: Abril 2026 ﹞ Clases por Zoom o Google Meet + Soporte</p>
             </div>
         </div>
     </section>
@@ -352,8 +533,8 @@
                     <h2><i class="fas fa-handshake"></i> Asesorías personalizadas</h2>
                     <p>¿Necesitas un plan de formación a medida, desarrollo de herramientas o mentoría ejecutiva? Cuéntame tu objetivo.</p>
                     <div class="contact-details">
-                        <div><i class="fas fa-envelope"></i> ernestoguerrero998@gmail.com</div>
-                        <div><i class="fab fa-whatsapp"></i> +58 412 518 3359</div>
+                        <div><i class="fas fa-envelope"></i> ernesto.guerrero@egsolutions.com</div>
+                        <div><i class="fab fa-whatsapp"></i> +58 412 123 4567</div>
                         <div><i class="fab fa-linkedin"></i> /in/ernesto-guerrero-a9877a163</div>
                     </div>
                     <div class="social-icons-contact">
@@ -364,26 +545,20 @@
                 </div>
                 <div class="contact-form">
                     <h3>Solicita información</h3>
-                    <form id="contactForm" action="https://formsubmit.co/ernestoguerrero998@gmail.com" method="POST">
-                        <input type="text" name="name" placeholder="Nombre completo" required>
-                        <input type="email" name="email" placeholder="Correo electrónico" required>
-                        <input type="text" name="phone" placeholder="Teléfono / WhatsApp">
-                        <select name="interest" required>
+                    <form id="contactForm" action="#" method="post">
+                        <input type="text" placeholder="Nombre completo" required>
+                        <input type="email" placeholder="Correo electrónico" required>
+                        <input type="text" placeholder="Teléfono / WhatsApp">
+                        <select required>
                             <option value="" disabled selected>¿Qué te interesa?</option>
                             <option>Curso de Python (Fundamentos)</option>
                             <option>Curso avanzado de ingeniería</option>
                             <option>Desarrollo de herramienta personalizada</option>
                             <option>Asesorías Personalizadas</option>
                         </select>
-                        <textarea name="message" rows="3" placeholder="Cuéntame tu proyecto..."></textarea>
-                        
-                        <!-- Configuración de FormSubmit -->
-                        <input type="hidden" name="_subject" value="Nuevo mensaje desde EG Solutions">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_next" value="https://egsolutions.com/gracias.html">
-                        
+                        <textarea rows="3" placeholder="Cuéntame tu proyecto..."></textarea>
                         <button type="submit" class="btn-primary btn-block"><i class="fas fa-paper-plane"></i> Enviar mensaje</button>
-                        <p class="form-note">Estaré Atento a tu información.</p>
+                        <p class="form-note">Estaré atento a su información.</p>
                     </form>
                 </div>
             </div>
@@ -398,8 +573,8 @@
             <a href="#"><i class="fab fa-github"></i></a>
             <a href="#"><i class="fas fa-envelope"></i></a>
         </div>
-        <p>Transformación digital - Data Science </p>
-        <p class="copyright">© 2026 Ing. Ernesto Guerrero — Todos los derechos reservados</p>
+        <p>Transformación digital - Data Science</p>
+        <p class="copyright">© 2026 Ing. Ernesto Guerrero - Todos los derechos reservados</p>
     </div>
 </footer>
 
