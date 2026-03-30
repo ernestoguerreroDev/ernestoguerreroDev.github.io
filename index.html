@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
     <title>EG Solutions</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -17,13 +17,13 @@
             <img src="https://i.ibb.co/F448NsqR/LOGO-EG-Solutions.png" alt="EG Solutions Logo" class="header-logo">
         </div>
         <h2 class="blog-name">Ernesto Guerrero</h2>
-        <p class="subtitle">VBA Excel · Python · JS</p>
+        <p class="subtitle">VBA Excel • Python • JS</p>
     </div>
     <nav>
         <div class="nav-container" id="navContainer">
             <button class="nav-btn active" data-tab="inicio"><i class="fas fa-home"></i> Inicio</button>
-            <button class="nav-btn" data-tab="cursos"><i class="fas fa-laptop-code"></i> Cursos</button>
-            <button class="nav-btn" data-tab="herramientas"><i class="fas fa-toolbox"></i> Herramientas</button>
+            <button class="nav-btn" data-tab="cursos">🎓 Cursos</button>
+            <button class="nav-btn" data-tab="herramientas"><i class="fas fa-toolbox"></i>Herramientas</button>
             <button class="nav-btn" data-tab="contenido-curso"><i class="fas fa-book-open"></i> Contenido del Curso</button>
             <button class="nav-btn" data-tab="contacto"><i class="fas fa-calendar-check"></i> Asesorías</button>
         </div>
@@ -31,28 +31,36 @@
 </header>
 
 <main class="container">
+    <!-- INICIO -->
     <section id="inicio" class="tab-content active">
+        <!-- Fecha y Visitantes -->
+        <div class="info-bar">
+            <div class="date-display" id="currentDate">
+                <i class="fas fa-calendar-day"></i>
+                <span id="dateText">Cargando fecha...</span>
+            </div>
+            <div class="visitor-counter">
+                <i class="fas fa-eye"></i>
+                <span id="visitorCount">0</span> visitas
+            </div>
+        </div>
+
         <div class="card profile-card">
-            
             <div class="profile-header">
                 <div class="profile-avatar-wrapper">
                     <img src="https://i.ibb.co/b5nMbJfw/CEO-EG-Solutions.jpg" alt="Ernesto Guerrero" class="profile-photo">
                 </div>
                 <div class="profile-title">
-                    <div class="date-display" id="currentDateContainer">
-                        <i class="far fa-calendar-alt"></i> <span id="currentDate"></span>
-                    </div>
-                    <h2>Ingeniería de Petróleo & Desarrollo de Soluciones Digitales</h2>
+                    <h2>Ingeniero de Petróleo | Desarrollador</h2>
                     <p class="intro-text">
                         <strong>Ingeniero de Petróleo con +13 años de experiencia</strong> en la industria. Apoyado en la ingeniería informática, dicto cursos para estudiantes y profesionales que buscan <strong>simplificar procesos</strong> mediante la automatización con Python, VBA Excel e Inteligencia Artificial.
                     </p>
                     <div class="hero-buttons">
-                        <button class="btn-primary" onclick="document.querySelector('[data-tab=\'cursos\']').click()"><i class="fab fa-python"></i> Explorar cursos</button>
-                        <button class="btn-outline" onclick="document.querySelector('[data-tab=\'contacto\']').click()"><i class="fas fa-calendar-alt"></i> Agendar asesoría</button>
+                        <a href="#" class="btn-primary" id="ctaCursos"><i class="fab fa-python"></i> Explorar cursos</a>
+                        <a href="#" class="btn-outline" id="ctaAsesoria"><i class="fas fa-calendar-alt"></i> Agendar asesoría</a>
                     </div>
                 </div>
             </div>
-            
             <div class="info-grid">
                 <div class="info-item">
                     <strong><i class="fas fa-chalkboard-teacher"></i> Asesorías personalizadas</strong>
@@ -67,8 +75,7 @@
                     <p>Desarrollo de herramientas educativas para el aprendizaje de las cátedras de perforación, producción y yacimientos para estudiantes y profesores.</p>
                 </div>
             </div>
-            
-            <div class="info-item full-width" style="margin-top: 1.5rem;">
+            <div class="info-item full-width">
                 <strong><i class="fas fa-play-circle"></i> Conoce EG Solutions en acción</strong>
                 <div class="video-wrapper">
                     <iframe 
@@ -84,14 +91,17 @@
         </div>
     </section>
 
+    <!-- CURSOS -->
     <section id="cursos" class="tab-content">
         <div class="card">
             <h2><i class="fab fa-python"></i> Curso de Python para Ingeniería Petrolera</h2>
 
+            <!-- Visión general -->
             <div class="course-vision">
                 <p><i class="fas fa-bullseye"></i> <strong>Visión del curso:</strong> Proveer una base sólida en Python, ideal para estudiantes y profesores que empiezan con la digitalización desde cálculos básicos hasta un nivel avanzado, aplicados en las diferentes áreas de la ingeniería petrolera: Perforación, Producción, Yacimientos con algoritmos para análisis de Datos y herramientas funcionales de forma interactiva para lograr un enfoque académico y profesional.</p>
             </div>
 
+            <!-- 8 módulos -->
             <div class="modules-showcase">
                 <div class="module-card">
                     <div class="module-number">01</div>
@@ -153,19 +163,22 @@
                     <div class="module-number">08</div>
                     <div class="module-content">
                         <div class="module-title">Proyecto Final + Simulación con las herramientas</div>
-                        <div class="module-desc">Crear un script en Python para calcular el índice de Productividad (IP), la tasa neta de producción de petróleo (Qo) y agua (Qw), además de determinar la Gravedad API de un crudo a partir de la gravedad específica (GEP).</div>
+                        <div class="module-desc">Crear un script en Python para calcular el Índice de Productividad (IP), la tasa neta de producción de petróleo (Qo) y agua (Qw), además de determinar la Gravedad API de un crudo a partir de la gravedad específica (GEP).</div>
                         <div class="module-example"><i class="fas fa-microchip"></i> Simulación con las herramientas de perforación, producción y yacimientos.</div>
                     </div>
                 </div>
             </div>
 
-            <div class="simulation-badge">
-                <i class="fas fa-cogs"></i>
-                <span>+ Las 3 herramientas de simulación de Parámetros de perforación, Producción y Yacimientos</span>
-                <p>Desarrolla e integra tus propias herramientas interactivas durante el curso</p>
+            <!-- Badge herramientas -->
+            <div class="simulation-badge" style="background: linear-gradient(135deg, #0b2b4f 0%, #1a4d7a 100%); color: white; border-radius: 16px; padding: 1rem 1.5rem; margin: 1rem 0 1.8rem; text-align: center;">
+                <i class="fas fa-cogs" style="font-size: 1.8rem; margin-right: 0.5rem; vertical-align: middle;"></i>
+                <span style="font-weight: 700; font-size: 1.1rem;">+ Las 3 herramientas de simulación de Parámetros de perforación, Producción y Yacimientos</span>
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">Desarrolla e integra tus propias herramientas interactivas durante el curso</p>
             </div>
 
+            <!-- Videos + descripciones detalladas (con enlaces de Google Drive) -->
             <div class="tools-videos-grid">
+                <!-- Herramienta 1: Perforación -->
                 <div class="video-tool-card">
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1jhgpWBX2nZvjjQVExM7UwkIOtwKyiZk2/preview" title="Simulador de Perforación" frameborder="0" allowfullscreen></iframe>
@@ -173,10 +186,11 @@
                     <div class="tool-info">
                         <h4><i class="fas fa-hard-hat"></i> Simulador de Parámetros de Perforación</h4>
                         <div class="tool-description">
-                            Este simulador integra la ingeniería de petróleo con la ciencia de datos para crear un Gemelo Digital que modela el comportamiento dinámico de un pozo a 8,500 pies de profundidad. A través de potentes scripts en Python, la herramienta genera perfiles geológicos y operacionales precisos y emplea algoritmos de detección automática para identificar en tiempo real eventos críticos como Kicks, Washouts y Pegas Diferenciales.
+                            Este simulador integra la ingeniería de petróleo con la ciencia de datos para crear un Gemelo Digital que modela el comportamiento dinámico de un pozo a 8,500 pies de profundidad. A través de potentes scripts en Python, la herramienta genera perfiles geológicos y operacionales precisos (incluyendo litología, presiones y desgaste de mecha) y emplea algoritmos de detección automática para identificar en tiempo real eventos críticos como Kicks, Washouts y Pegas Diferenciales. El sistema culmina en un Dashboard Interactivo en HTML que visualiza registros verticales (Well Logs) profesionales y KPIs de eficiencia, consolidándose como una solución educativa y técnica indispensable para optimizar el monitoreo y reducir los tiempos no productivos (NPT) en la industria actual.
                         </div>
                     </div>
                 </div>
+                <!-- Herramienta 2: Producción -->
                 <div class="video-tool-card">
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1kqQEu33Lf6GZzJ07xyIwTr5AFmXeBu9S/preview" title="Simulador de Producción" frameborder="0" allowfullscreen></iframe>
@@ -184,10 +198,11 @@
                     <div class="tool-info">
                         <h4><i class="fas fa-chart-line"></i> Simulador de Producción</h4>
                         <div class="tool-description">
-                            Es una herramienta de ingeniería de yacimientos que integra el Método de Vogel con algoritmos de Machine Learning para diagnosticar y predecir el comportamiento de pozos petroleros. El programa permite modelar la Curva de Oferta de Fluido (IPR) para determinar la tasa de producción óptima, y emplea Regresión Lineal para aprender de los datos históricos y proyectar escenarios de producción futura.
+                            Es una herramienta de ingeniería de yacimientos que integra el Método de Vogel con algoritmos de Machine Learning para diagnosticar y predecir el comportamiento de pozos petroleros con empuje de gas en solución. El programa permite modelar la Curva de Oferta de Fluido (IPR) para determinar la tasa de producción óptima en función de la presión de fondo fluyente, pero va un paso más allá al emplear Regresión Lineal para aprender de los datos históricos y proyectar escenarios de producción futura. Además, la herramienta automatiza el análisis de declinación para identificar con precisión el Límite Económico del activo, presentando todos los resultados mediante gráficos comparativos interactivos que facilitan la toma de decisiones estratégicas para maximizar la recuperación de hidrocarburos y optimizar la vida útil del pozo.
                         </div>
                     </div>
                 </div>
+                <!-- Herramienta 3: Yacimientos -->
                 <div class="video-tool-card">
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1r3XllEN6EjsMzGvIKumuqO0Cj4X0R4DN/preview" title="Simulador de Yacimientos" frameborder="0" allowfullscreen></iframe>
@@ -195,26 +210,28 @@
                     <div class="tool-info">
                         <h4><i class="fas fa-tachometer-alt"></i> Simulador de Yacimientos</h4>
                         <div class="tool-description">
-                            Simulación interactiva que integra la ingeniería de yacimientos con entornos gráficos para modelar el comportamiento dinámico de fluidos en estructuras geológicas como anticlinales. A través de una interfaz que permite configurar parámetros críticos (porosidad, permeabilidad, viscosidad) para observar en tiempo real cómo interactúan las fuerzas del subsuelo durante procesos de producción.
+                            Simulación interactiva que integra la ingeniería de yacimientos con entornos gráficos para modelar el comportamiento dinámico de fluidos en estructuras geológicas como anticlinales. A través de una interfaz que permite configurar parámetros críticos —como porosidad, permeabilidad, viscosidad y saturaciones de fluidos— para observar en tiempo real cómo interactúan las fuerzas del subsuelo durante procesos de producción. Al generar gráficos esta herramienta se convierte en un recurso educativo que transforma conceptos teóricos de flujo fraccional y caracterización petrofísica en una experiencia práctica y visual, ideal para optimizar el aprendizaje.
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Detalles del curso -->
             <div class="course-details">
                 <div class="details-grid">
                     <div class="details-block">
                         <h4><i class="fas fa-video"></i> Modalidad</h4>
-                        <p>🖥️ Online por Google Meet<br>
-                        ⏱️ Horario: Lunes a Sábado | 18:00 – 20:00 (Hora Venezuela)</p>
+                        <p>💻 Online por Google Meet<br>
+                        🕕 Horario: Lunes a Sábado | 18:00 – 20:00 (Hora Venezuela)</p>
                     </div>
                     <div class="details-block">
                         <h4><i class="fas fa-laptop-code"></i> Herramientas a utilizar</h4>
                         <ul>
                             <li>💻 Laptop</li>
-                            <li>⌨️ Editor de código: NotePad++ / VS Code</li>
-                            <li>🤖 Gemini AI / Copilot</li>
-                            <li>🐍 Trinket</li>
+                            <li>📝 Editor de código: NotePad++ / Visual Studio Code</li>
+                            <li>🤖 Gemini AI</li>
+                            <li>🤖 Copilot</li>
+                            <li>🌐 Trinket</li>
                         </ul>
                     </div>
                     <div class="details-block">
@@ -225,12 +242,14 @@
                 </div>
             </div>
 
-            <div class="value-added">
+            <!-- Valor agregado -->
+            <div style="margin-top: 1rem; background: #eef2ff; border-radius: 20px; padding: 1rem 1.5rem; text-align: center;">
                 <i class="fas fa-gem"></i> <strong>Valor agregado:</strong> Se entregan los 3 proyectos en backend y frontend (perforación, producción, yacimientos) para que el participante pueda ejecutarlos y aplicarlos a su caso de estudio.
             </div>
         </div>
     </section>
 
+    <!-- HERRAMIENTAS (también actualizadas con los mismos videos de Drive) -->
     <section id="herramientas" class="tab-content">
         <div class="card">
             <h2><i class="fas fa-cogs"></i> Herramientas digitales desarrolladas</h2>
@@ -268,11 +287,12 @@
                 </div>
             </div>
             <div class="notice-tools">
-                <i class="fas fa-info-circle"></i> ¿Quieres una versión personalizada para tu empresa? <a href="#" onclick="document.querySelector('[data-tab=\'contacto\']').click()">Solicita una demo exclusiva</a>.
+                <i class="fas fa-info-circle"></i> ¿Quieres una versión personalizada para tu empresa? <a href="#" id="ctaDemo">Solicita una demo exclusiva</a>.
             </div>
         </div>
     </section>
 
+    <!-- CONTENIDO DEL CURSO (sin cambios) -->
     <section id="contenido-curso" class="tab-content">
         <div class="card">
             <h2><i class="fas fa-book"></i> Python-JS Avanzado</h2>
@@ -292,7 +312,7 @@
                         <li>NumPy: arrays y operaciones vectorizadas</li>
                         <li>Pandas: limpieza, transformación y agregación</li>
                         <li>Visualización: Matplotlib, Seaborn, Plotly</li>
-                        <li>Lectura/escritura (Excel, CSV, JSON)</li>
+                        <li>Lectura/escritura (Excel,CSV, JSON)</li>
                     </ul>
                 </div>
                 <div class="module-block">
@@ -318,12 +338,13 @@
                 <i class="fas fa-certificate"></i> Proyectos Totalmente Personalizados.
             </div>
             <div class="cta-curso">
-                <button class="btn-primary btn-large" onclick="document.querySelector('[data-tab=\'contacto\']').click()"><i class="fas fa-graduation-cap"></i> Inscríbete ahora</button>
-                <p style="margin-top:10px;">Próximas Actividades: Abril 2026 · Clases por Zoom o Google Meet + Soporte</p>
+                <a href="#" class="btn-primary btn-large" id="ctaContactoCurso"><i class="fas fa-graduation-cap"></i> Inscríbete ahora</a>
+                <p>Próximas Actividades: Abril 2026 — Clases por Zoom o Google Meet + Soporte</p>
             </div>
         </div>
     </section>
 
+    <!-- CONTACTO (sin cambios) -->
     <section id="contacto" class="tab-content">
         <div class="card contact-card">
             <div class="contact-flex">
@@ -344,23 +365,25 @@
                 <div class="contact-form">
                     <h3>Solicita información</h3>
                     <form id="contactForm" action="https://formsubmit.co/ernestoguerrero998@gmail.com" method="POST">
-                        <input type="hidden" name="_subject" value="Nuevo mensaje desde tu Portafolio EG Solutions!">
-                        <input type="hidden" name="_captcha" value="false">
-                        
-                        <input type="text" name="Nombre" placeholder="Nombre completo" required>
-                        <input type="email" name="Email" placeholder="Correo electrónico" required>
-                        <input type="text" name="Telefono" placeholder="Teléfono / WhatsApp">
-                        <select name="Interes" required>
+                        <input type="text" name="name" placeholder="Nombre completo" required>
+                        <input type="email" name="email" placeholder="Correo electrónico" required>
+                        <input type="text" name="phone" placeholder="Teléfono / WhatsApp">
+                        <select name="interest" required>
                             <option value="" disabled selected>¿Qué te interesa?</option>
-                            <option value="Curso de Python (Fundamentos)">Curso de Python (Fundamentos)</option>
-                            <option value="Curso avanzado de ingenieria">Curso avanzado de ingeniería</option>
-                            <option value="Desarrollo de herramienta personalizada">Desarrollo de herramienta personalizada</option>
-                            <option value="Asesorias Personalizadas">Asesorías Personalizadas</option>
+                            <option>Curso de Python (Fundamentos)</option>
+                            <option>Curso avanzado de ingeniería</option>
+                            <option>Desarrollo de herramienta personalizada</option>
+                            <option>Asesorías Personalizadas</option>
                         </select>
-                        <textarea name="Mensaje" rows="3" placeholder="Cuéntame tu proyecto..." required></textarea>
+                        <textarea name="message" rows="3" placeholder="Cuéntame tu proyecto..."></textarea>
+                        
+                        <!-- Configuración de FormSubmit -->
+                        <input type="hidden" name="_subject" value="Nuevo mensaje desde EG Solutions">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" value="https://egsolutions.com/gracias.html">
                         
                         <button type="submit" class="btn-primary btn-block"><i class="fas fa-paper-plane"></i> Enviar mensaje</button>
-                        <p class="form-note">Estaré atento a su información.</p>
+                        <p class="form-note">Estaré Atento a tu información.</p>
                     </form>
                 </div>
             </div>
@@ -373,15 +396,10 @@
         <div class="social-icons">
             <a href="https://www.linkedin.com/in/ernesto-guerrero-a9877a163" target="_blank"><i class="fab fa-linkedin-in"></i></a>
             <a href="#"><i class="fab fa-github"></i></a>
-            <a href="mailto:ernestoguerrero998@gmail.com"><i class="fas fa-envelope"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
         </div>
-        <p>Transformación digital - Data Science</p>
-        <p class="copyright">© 2026 Ing. Ernesto Guerrero - Todos los derechos reservados</p>
-        
-        <div class="visitor-counter" style="margin-top: 20px;">
-            <p style="font-size: 0.8rem; margin-bottom: 5px; opacity: 0.8;">Visitas a la página:</p>
-            <img src="https://profile-counter.glitch.me/ernestoguerrero998/count.svg" alt="Contador de Visitas" style="border-radius: 5px;">
-        </div>
+        <p>Transformación digital - Data Science </p>
+        <p class="copyright">© 2026 Ing. Ernesto Guerrero — Todos los derechos reservados</p>
     </div>
 </footer>
 
