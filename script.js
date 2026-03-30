@@ -1,35 +1,62 @@
 // ==================== FECHA ACTUAL ====================
 function setCurrentDate() {
-    const now = new Date();
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    let fechaStr = now.toLocaleDateString('es-ES', options);
-    fechaStr = fechaStr.charAt(0).toUpperCase() + fechaStr.slice(1);
     const dateSpan = document.getElementById('currentDateSpan');
-    if (dateSpan) dateSpan.textContent = fechaStr;
-}
-setCurrentDate();
+    if (!dateSpan) return;
 
-// ==================== CONTADOR DE VISITAS (CountAPI + fallback) ====================
+    try {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        let fechaStr = now.toLocaleDateString('es-ES', options);
+        // Capitalizar primera letra
+        fechaStr = fechaStr.charAt(0).toUpperCase() + fechaStr.slice(1);
+        dateSpan.textContent = fechaStr;
+    } catch (e) {
+        console.warn('Error formateando fecha:', e);
+        dateSpan.textContent = 'Fecha no disponible';
+    }
+}
+
+// Ejecutar al cargar y también cada día (por si la página permanece abierta)
+setCurrentDate();
+// Actualizar cada 24h por si cambia el día
+setInterval(setCurrentDate, 86400000);
+
+// ==================== CONTADOR DE VISITAS con emoji ====================
 async function updateVisitCounter() {
     const containerSpan = document.getElementById('visitCounterDisplay');
     if (!containerSpan) return;
+
+    // Prefijo con emoji de persona
+    const emoji = '👤 ';
+    const defaultText = `${emoji}Visitante N°: --`;
+
     const namespace = 'egsolutions_blog_pet';
-    const key = 'visits_total_v2';
+    const key = 'visits_total_v3'; // Cambio de clave para evitar caché antigua
     const url = `https://api.countapi.xyz/hit/${namespace}/${key}`;
+
     try {
         const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data && typeof data.value === 'number') {
-            containerSpan.innerText = `Visitante N°: ${data.value.toLocaleString()}`;
-        } else throw new Error('Fallback');
+            containerSpan.innerText = `${emoji}Visitante N°: ${data.value.toLocaleString()}`;
+            return;
+        }
+        throw new Error('Respuesta inválida');
     } catch (err) {
-        let visits = localStorage.getItem('eg_visits_fallback');
-        if (visits === null) visits = 1;
-        else visits = parseInt(visits) + 1;
-        localStorage.setItem('eg_visits_fallback', visits);
-        containerSpan.innerText = `Visitante N°: ${visits.toLocaleString()}`;
+        console.warn('CountAPI falló, usando localStorage', err);
+        // Fallback con localStorage
+        let visits = localStorage.getItem('eg_visits_fallback_v3');
+        if (visits === null) {
+            visits = 1;
+        } else {
+            visits = parseInt(visits, 10) + 1;
+        }
+        localStorage.setItem('eg_visits_fallback_v3', visits);
+        containerSpan.innerText = `${emoji}Visitante N°: ${visits.toLocaleString()}`;
     }
 }
+
 updateVisitCounter();
 
 // ==================== NAVEGACIÓN POR TABS (pestañas) ====================
@@ -53,7 +80,7 @@ function activateTab(tabId) {
     tabs.forEach(btn => {
         if (btn.getAttribute('data-tab') === tabId) {
             btn.classList.add('active');
-            // Scroll suave horizontal si es necesario en móviles
+            // Scroll suave horizontal en móviles
             btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         } else {
             btn.classList.remove('active');
@@ -69,7 +96,7 @@ tabs.forEach(btn => {
         const tabId = btn.getAttribute('data-tab');
         if (tabId && sections[tabId]) {
             activateTab(tabId);
-            // Scroll suave al contenido principal después del cambio
+            // Scroll suave al contenido principal
             const containerTop = document.querySelector('.container').offsetTop;
             window.scrollTo({ top: Math.max(0, containerTop - 20), behavior: 'smooth' });
         }
@@ -87,7 +114,7 @@ if (hash && sections[hash]) {
 }
 activateTab(initialTab);
 
-// Escuchar cambios en el hash (para enlaces externos)
+// Escuchar cambios en el hash
 window.addEventListener('hashchange', () => {
     const newHash = window.location.hash.slice(1);
     if (newHash && sections[newHash]) {
