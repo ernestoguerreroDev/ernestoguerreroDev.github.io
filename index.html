@@ -142,6 +142,43 @@
             margin: 0;
             line-height: 1.4;
         }
+        .course-details {
+            background: #f9fafc;
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin: 2rem 0 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        .details-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: space-between;
+        }
+        .details-block {
+            flex: 1;
+            min-width: 200px;
+        }
+        .details-block h4 {
+            color: #0b2b4f;
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        .details-block ul {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+        .details-block li {
+            margin-bottom: 0.25rem;
+        }
+        .details-block a {
+            color: #1e6f9f;
+            text-decoration: none;
+        }
+        .details-block a:hover {
+            text-decoration: underline;
+        }
         @media (max-width: 640px) {
             .module-card {
                 flex-direction: column;
@@ -151,6 +188,10 @@
                 width: 40px;
                 height: 40px;
                 font-size: 1rem;
+            }
+            .details-grid {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
     </style>
@@ -177,7 +218,7 @@
 </header>
 
 <main class="container">
-    <!-- INICIO (sin cambios) -->
+    <!-- INICIO -->
     <section id="inicio" class="tab-content active">
         <div class="card profile-card">
             <div class="profile-header">
@@ -225,7 +266,7 @@
         </div>
     </section>
 
-    <!-- CURSOS: versión mejorada, sin programas complementarios, con videos y visión general -->
+    <!-- CURSOS: versión mejorada con visión, módulos, videos y detalles del curso -->
     <section id="cursos" class="tab-content">
         <div class="card">
             <h2><i class="fab fa-python"></i> Curso de Python para Ingeniería Petrolera</h2>
@@ -235,7 +276,7 @@
                 <p><i class="fas fa-bullseye"></i> <strong>Visión del curso:</strong> Proveer una base sólida en Python, ideal para estudiantes y profesores que empiezan con la digitalización desde cálculos básicos hasta un nivel avanzado, aplicados en las diferentes áreas de la ingeniería petrolera: Perforación, Producción, Yacimientos con algoritmos para análisis de Datos y herramientas funcionales de forma interactiva para lograr un enfoque académico y profesional.</p>
             </div>
 
-            <!-- 8 módulos mejorados visualmente -->
+            <!-- 8 módulos mejorados -->
             <div class="modules-showcase">
                 <div class="module-card">
                     <div class="module-number">01</div>
@@ -303,14 +344,14 @@
                 </div>
             </div>
 
-            <!-- Bloque destacado de las 3 herramientas de simulación (badge) -->
+            <!-- Badge de las 3 herramientas -->
             <div class="simulation-badge" style="background: linear-gradient(135deg, #0b2b4f 0%, #1a4d7a 100%); color: white; border-radius: 16px; padding: 1rem 1.5rem; margin: 1rem 0 1.8rem; text-align: center;">
                 <i class="fas fa-cogs" style="font-size: 1.8rem; margin-right: 0.5rem; vertical-align: middle;"></i>
                 <span style="font-weight: 700; font-size: 1.1rem;">+ Las 3 herramientas de simulación de Parámetros de perforación, Producción y Yacimientos</span>
                 <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">Desarrolla e integra tus propias herramientas interactivas durante el curso</p>
             </div>
 
-            <!-- Videos de las 3 herramientas que ofrece el curso (eliminados programas complementarios) -->
+            <!-- Videos de las 3 herramientas -->
             <div class="tools-videos-grid">
                 <div class="video-tool-card">
                     <div class="video-wrapper">
@@ -341,14 +382,40 @@
                 </div>
             </div>
 
-            <!-- Valor agregado (se mantiene el mensaje de entrega de proyectos) -->
-            <div style="margin-top: 2rem; background: #eef2ff; border-radius: 20px; padding: 1rem 1.5rem; text-align: center;">
+            <!-- NUEVO: Detalles del curso (modalidad, horario, herramientas, contacto) -->
+            <div class="course-details">
+                <div class="details-grid">
+                    <div class="details-block">
+                        <h4><i class="fas fa-video"></i> Modalidad</h4>
+                        <p>📍 Online por Google Meet<br>
+                        🗓️ Horario: Lunes a Sábado | 18:00 – 20:00 (Hora Venezuela)</p>
+                    </div>
+                    <div class="details-block">
+                        <h4><i class="fas fa-laptop-code"></i> Herramientas a utilizar</h4>
+                        <ul>
+                            <li>💻 Laptop</li>
+                            <li>📝 Editor de código: NotePad++ / Visual Studio Code</li>
+                            <li>🤖 Gemini AI</li>
+                            <li>⚙️ Copilot</li>
+                            <li>🐍 Trinket</li>
+                        </ul>
+                    </div>
+                    <div class="details-block">
+                        <h4><i class="fas fa-envelope"></i> Más información</h4>
+                        <p>📱 WhatsApp: <a href="https://wa.me/584125183359" target="_blank">+58 412-5183359</a><br>
+                        📧 Email: <a href="mailto:ernestoguerrero998@gmail.com">ernestoguerrero998@gmail.com</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Valor agregado (entrega de proyectos) -->
+            <div style="margin-top: 1rem; background: #eef2ff; border-radius: 20px; padding: 1rem 1.5rem; text-align: center;">
                 <i class="fas fa-gem"></i> <strong>Valor agregado:</strong> Se entregan los 3 proyectos en backend y frontend (perforación, producción, yacimientos) para que el participante pueda ejecutarlos y aplicarlos a su caso de estudio.
             </div>
         </div>
     </section>
 
-    <!-- HERRAMIENTAS (se mantiene igual) -->
+    <!-- HERRAMIENTAS -->
     <section id="herramientas" class="tab-content">
         <div class="card">
             <h2><i class="fas fa-cogs"></i> Herramientas digitales desarrolladas</h2>
@@ -391,7 +458,7 @@
         </div>
     </section>
 
-    <!-- CONTENIDO DEL CURSO (sin cambios) -->
+    <!-- CONTENIDO DEL CURSO -->
     <section id="contenido-curso" class="tab-content">
         <div class="card">
             <h2><i class="fas fa-book"></i> Plan de estudios: Python e Ingeniería</h2>
@@ -443,7 +510,7 @@
         </div>
     </section>
 
-    <!-- CONTACTO (sin cambios) -->
+    <!-- CONTACTO -->
     <section id="contacto" class="tab-content">
         <div class="card contact-card">
             <div class="contact-flex">
