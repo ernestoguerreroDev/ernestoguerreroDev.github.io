@@ -7,7 +7,6 @@ function setCurrentDate() {
         const now = new Date();
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         let fechaStr = now.toLocaleDateString('es-ES', options);
-        // Capitalizar primera letra
         fechaStr = fechaStr.charAt(0).toUpperCase() + fechaStr.slice(1);
         dateSpan.textContent = fechaStr;
     } catch (e) {
@@ -16,7 +15,7 @@ function setCurrentDate() {
     }
 }
 
-// Ejecutar al cargar y también cada día (por si la página permanece abierta)
+// Ejecutar al cargar
 setCurrentDate();
 // Actualizar cada 24h por si cambia el día
 setInterval(setCurrentDate, 86400000);
@@ -26,12 +25,12 @@ async function updateVisitCounter() {
     const containerSpan = document.getElementById('visitCounterDisplay');
     if (!containerSpan) return;
 
-    // Prefijo con emoji de persona
+    // El emoji ya está en el HTML, pero por si acaso lo forzamos
     const emoji = '👤 ';
     const defaultText = `${emoji}Visitante N°: --`;
 
     const namespace = 'egsolutions_blog_pet';
-    const key = 'visits_total_v3'; // Cambio de clave para evitar caché antigua
+    const key = 'visits_total_v4'; // Nueva clave para evitar caché
     const url = `https://api.countapi.xyz/hit/${namespace}/${key}`;
 
     try {
@@ -39,21 +38,20 @@ async function updateVisitCounter() {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data && typeof data.value === 'number') {
-            containerSpan.innerText = `${emoji}Visitante N°: ${data.value.toLocaleString()}`;
+            containerSpan.innerHTML = `${emoji}Visitante N°: ${data.value.toLocaleString()}`;
             return;
         }
         throw new Error('Respuesta inválida');
     } catch (err) {
         console.warn('CountAPI falló, usando localStorage', err);
-        // Fallback con localStorage
-        let visits = localStorage.getItem('eg_visits_fallback_v3');
+        let visits = localStorage.getItem('eg_visits_fallback_v4');
         if (visits === null) {
             visits = 1;
         } else {
             visits = parseInt(visits, 10) + 1;
         }
-        localStorage.setItem('eg_visits_fallback_v3', visits);
-        containerSpan.innerText = `${emoji}Visitante N°: ${visits.toLocaleString()}`;
+        localStorage.setItem('eg_visits_fallback_v4', visits);
+        containerSpan.innerHTML = `${emoji}Visitante N°: ${visits.toLocaleString()}`;
     }
 }
 
@@ -70,17 +68,14 @@ const sections = {
 };
 
 function activateTab(tabId) {
-    // Ocultar todas las secciones
     Object.values(sections).forEach(section => {
         if (section) section.classList.remove('active');
     });
     if (sections[tabId]) sections[tabId].classList.add('active');
 
-    // Actualizar clase activa en botones
     tabs.forEach(btn => {
         if (btn.getAttribute('data-tab') === tabId) {
             btn.classList.add('active');
-            // Scroll suave horizontal en móviles
             btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         } else {
             btn.classList.remove('active');
@@ -96,14 +91,12 @@ tabs.forEach(btn => {
         const tabId = btn.getAttribute('data-tab');
         if (tabId && sections[tabId]) {
             activateTab(tabId);
-            // Scroll suave al contenido principal
             const containerTop = document.querySelector('.container').offsetTop;
             window.scrollTo({ top: Math.max(0, containerTop - 20), behavior: 'smooth' });
         }
     });
 });
 
-// Determinar tab inicial: hash > localStorage > 'inicio'
 const hash = window.location.hash.slice(1);
 let savedTab = localStorage.getItem('activeTab');
 let initialTab = 'inicio';
@@ -114,7 +107,6 @@ if (hash && sections[hash]) {
 }
 activateTab(initialTab);
 
-// Escuchar cambios en el hash
 window.addEventListener('hashchange', () => {
     const newHash = window.location.hash.slice(1);
     if (newHash && sections[newHash]) {
@@ -124,7 +116,6 @@ window.addEventListener('hashchange', () => {
     }
 });
 
-// Ajustar posición si hay hash al cargar
 if (window.location.hash) {
     setTimeout(() => {
         const containerTop = document.querySelector('.container').offsetTop;
@@ -134,7 +125,7 @@ if (window.location.hash) {
     }, 100);
 }
 
-// ==================== BOTONES DE ACCIÓN (CTA) ====================
+// ==================== BOTONES CTA ====================
 const ctaCursos = document.getElementById('ctaCursos');
 const ctaAsesoria = document.getElementById('ctaAsesoria');
 const ctaContactoCurso = document.getElementById('ctaContactoCurso');
@@ -145,7 +136,7 @@ if (ctaAsesoria) ctaAsesoria.addEventListener('click', (e) => { e.preventDefault
 if (ctaContactoCurso) ctaContactoCurso.addEventListener('click', (e) => { e.preventDefault(); activateTab('contacto'); });
 if (ctaDemo) ctaDemo.addEventListener('click', (e) => { e.preventDefault(); activateTab('contacto'); });
 
-// ==================== BOTÓN VOLVER ARRIBA (SCROLL TOP) ====================
+// ==================== SCROLL TOP ====================
 const scrollBtn = document.getElementById('scrollTopBtn');
 window.addEventListener('scroll', () => {
     if (window.scrollY > 400) {
@@ -160,7 +151,7 @@ if (scrollBtn) {
     });
 }
 
-// ==================== PREVENIR ENVÍO DEL FORMULARIO (demo) ====================
+// ==================== FORMULARIO ====================
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
