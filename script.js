@@ -18,14 +18,14 @@ function setCurrentDate() {
 setCurrentDate();
 setInterval(setCurrentDate, 86400000);
 
-// ==================== CONTADOR DE VISITAS ====================
+// ==================== CONTADOR DE VISITAS (solo emoji + número) ====================
 async function updateVisitCounter() {
     const containerSpan = document.getElementById('visitCounterDisplay');
     if (!containerSpan) return;
 
-    const emoji = '👤 ';
+    const emoji = '👤';
     const namespace = 'egsolutions_blog_pet';
-    const key = 'visits_total_v4';
+    const key = 'visits_total_v5'; // Nueva clave para evitar caché
     const url = `https://api.countapi.xyz/hit/${namespace}/${key}`;
 
     try {
@@ -33,20 +33,20 @@ async function updateVisitCounter() {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data && typeof data.value === 'number') {
-            containerSpan.innerHTML = `${emoji}Visitante N°: ${data.value.toLocaleString()}`;
+            containerSpan.innerHTML = `${emoji} ${data.value.toLocaleString()}`;
             return;
         }
         throw new Error('Respuesta inválida');
     } catch (err) {
         console.warn('CountAPI falló, usando localStorage', err);
-        let visits = localStorage.getItem('eg_visits_fallback_v4');
+        let visits = localStorage.getItem('eg_visits_fallback_v5');
         if (visits === null) {
             visits = 1;
         } else {
             visits = parseInt(visits, 10) + 1;
         }
-        localStorage.setItem('eg_visits_fallback_v4', visits);
-        containerSpan.innerHTML = `${emoji}Visitante N°: ${visits.toLocaleString()}`;
+        localStorage.setItem('eg_visits_fallback_v5', visits);
+        containerSpan.innerHTML = `${emoji} ${visits.toLocaleString()}`;
     }
 }
 
@@ -146,40 +146,25 @@ if (scrollBtn) {
     });
 }
 
-// ==================== COMENTARIOS PÚBLICOS ====================
+// ==================== COMENTARIOS PÚBLICOS (inicio vacío) ====================
 let comments = [];
 
 function loadComments() {
-    const stored = localStorage.getItem('eg_public_comments_v2');
+    const stored = localStorage.getItem('eg_public_comments_v3');
     if (stored) {
         try {
             comments = JSON.parse(stored);
         } catch(e) { comments = []; }
     } else {
-        // Comentarios de ejemplo
-        comments = [
-            {
-                name: "María Rodríguez",
-                phone: "+58 412-1234567",
-                advisoryType: "Cursos",
-                comment: "Excelente curso, muy práctico. Aprendí mucho sobre Python aplicado a producción.",
-                date: new Date().toLocaleString()
-            },
-            {
-                name: "Carlos Méndez",
-                phone: "+58 424-7654321",
-                advisoryType: "Simulación",
-                comment: "¿Tienen material para aprender sobre simulación de yacimientos? Me interesaría.",
-                date: new Date().toLocaleString()
-            }
-        ];
+        // No hay comentarios de ejemplo, lista vacía
+        comments = [];
         saveComments();
     }
     renderComments();
 }
 
 function saveComments() {
-    localStorage.setItem('eg_public_comments_v2', JSON.stringify(comments));
+    localStorage.setItem('eg_public_comments_v3', JSON.stringify(comments));
 }
 
 function renderComments() {
@@ -187,7 +172,7 @@ function renderComments() {
     if (!commentsList) return;
 
     if (comments.length === 0) {
-        commentsList.innerHTML = '<div class="empty-comments">No hay comentarios aún. ¡Sé el primero en dejar tu opinión!</div>';
+        commentsList.innerHTML = '<div class="empty-comments">💬 No hay comentarios aún. ¡Sé el primero en dejar tu opinión!</div>';
         return;
     }
 
