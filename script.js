@@ -18,7 +18,7 @@ function setCurrentDate() {
 setCurrentDate();
 setInterval(setCurrentDate, 86400000);
 
-// ==================== CONTADOR DE VISITAS con emoji ====================
+// ==================== CONTADOR DE VISITAS ====================
 async function updateVisitCounter() {
     const containerSpan = document.getElementById('visitCounterDisplay');
     if (!containerSpan) return;
@@ -146,55 +146,29 @@ if (scrollBtn) {
     });
 }
 
-// ==================== FORMULARIO PRIVADO (ASESORÍAS) ====================
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('contactName')?.value.trim();
-        const email = document.getElementById('contactEmail')?.value.trim();
-        const phone = document.getElementById('contactPhone')?.value.trim();
-        const message = document.getElementById('contactMessage')?.value.trim();
-
-        if (!name || !email) {
-            alert('Por favor completa tu nombre y correo electrónico.');
-            return;
-        }
-
-        let alertMsg = `📋 Nueva consulta privada:\n\n`;
-        alertMsg += `Nombre: ${name}\n`;
-        alertMsg += `Correo: ${email}\n`;
-        if (phone) alertMsg += `Teléfono/WhatsApp: ${phone}\n`;
-        if (message) alertMsg += `Mensaje: ${message}\n`;
-        alertMsg += `\n✅ Revisa estos datos y contacta al interesado.`;
-
-        alert(alertMsg);
-        console.log('Consulta privada:', { name, email, phone, message });
-        contactForm.reset();
-    });
-}
-
-// ==================== COMENTARIOS PÚBLICOS (localStorage) ====================
+// ==================== COMENTARIOS PÚBLICOS ====================
 let comments = [];
 
 function loadComments() {
-    const stored = localStorage.getItem('eg_public_comments');
+    const stored = localStorage.getItem('eg_public_comments_v2');
     if (stored) {
         try {
             comments = JSON.parse(stored);
         } catch(e) { comments = []; }
     } else {
-        // Comentarios de ejemplo para mostrar que funciona
+        // Comentarios de ejemplo
         comments = [
             {
                 name: "María Rodríguez",
                 phone: "+58 412-1234567",
+                advisoryType: "Cursos",
                 comment: "Excelente curso, muy práctico. Aprendí mucho sobre Python aplicado a producción.",
                 date: new Date().toLocaleString()
             },
             {
                 name: "Carlos Méndez",
                 phone: "+58 424-7654321",
+                advisoryType: "Simulación",
                 comment: "¿Tienen material para aprender sobre simulación de yacimientos? Me interesaría.",
                 date: new Date().toLocaleString()
             }
@@ -205,7 +179,7 @@ function loadComments() {
 }
 
 function saveComments() {
-    localStorage.setItem('eg_public_comments', JSON.stringify(comments));
+    localStorage.setItem('eg_public_comments_v2', JSON.stringify(comments));
 }
 
 function renderComments() {
@@ -220,7 +194,10 @@ function renderComments() {
     commentsList.innerHTML = comments.map(comment => `
         <div class="comment-card">
             <div class="comment-header">
-                <span class="comment-name">${escapeHtml(comment.name)}</span>
+                <div>
+                    <span class="comment-name">${escapeHtml(comment.name)}</span>
+                    <span class="comment-advisory"><i class="fas fa-tag"></i> ${escapeHtml(comment.advisoryType)}</span>
+                </div>
                 ${comment.phone ? `<span class="comment-phone"><i class="fas fa-phone-alt"></i> ${escapeHtml(comment.phone)}</span>` : ''}
                 <span class="comment-date">${escapeHtml(comment.date)}</span>
             </div>
@@ -241,38 +218,41 @@ function escapeHtml(str) {
     });
 }
 
-function addComment(name, phone, comment) {
-    if (!name || !comment) {
-        alert('Por favor ingresa tu nombre y el comentario.');
+function addComment(name, phone, advisoryType, comment) {
+    if (!name || !advisoryType || !comment) {
+        alert('Por favor completa tu nombre, el tipo de asesoría y el comentario.');
         return false;
     }
     const newComment = {
         name: name.trim(),
         phone: phone ? phone.trim() : '',
+        advisoryType: advisoryType,
         comment: comment.trim(),
         date: new Date().toLocaleString()
     };
-    comments.unshift(newComment); // Los más nuevos arriba
+    comments.unshift(newComment);
     saveComments();
     renderComments();
     return true;
 }
 
-// Evento para publicar comentario
 const submitCommentBtn = document.getElementById('submitCommentBtn');
 if (submitCommentBtn) {
     submitCommentBtn.addEventListener('click', () => {
         const nameInput = document.getElementById('publicName');
         const phoneInput = document.getElementById('publicPhone');
+        const advisorySelect = document.getElementById('publicAdvisoryType');
         const commentInput = document.getElementById('publicComment');
 
         const name = nameInput ? nameInput.value.trim() : '';
         const phone = phoneInput ? phoneInput.value.trim() : '';
+        const advisoryType = advisorySelect ? advisorySelect.value : '';
         const comment = commentInput ? commentInput.value.trim() : '';
 
-        if (addComment(name, phone, comment)) {
+        if (addComment(name, phone, advisoryType, comment)) {
             if (nameInput) nameInput.value = '';
             if (phoneInput) phoneInput.value = '';
+            if (advisorySelect) advisorySelect.value = '';
             if (commentInput) commentInput.value = '';
             alert('¡Comentario publicado! Aparecerá en la lista.');
         }
