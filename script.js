@@ -146,21 +146,138 @@ if (scrollBtn) {
     });
 }
 
-// ==================== FORMULARIO SIMPLIFICADO ====================
+// ==================== FORMULARIO PRIVADO (ASESORÍAS) ====================
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const name = document.getElementById('contactName')?.value.trim();
         const email = document.getElementById('contactEmail')?.value.trim();
+        const phone = document.getElementById('contactPhone')?.value.trim();
+        const message = document.getElementById('contactMessage')?.value.trim();
 
         if (!name || !email) {
             alert('Por favor completa tu nombre y correo electrónico.');
             return;
         }
 
-        // Simulación de envío: mostramos un mensaje de agradecimiento
-        alert(`¡Gracias ${name}! Hemos recibido tu mensaje. Te contactaré a la brevedad al correo ${email}.`);
+        let alertMsg = `📋 Nueva consulta privada:\n\n`;
+        alertMsg += `Nombre: ${name}\n`;
+        alertMsg += `Correo: ${email}\n`;
+        if (phone) alertMsg += `Teléfono/WhatsApp: ${phone}\n`;
+        if (message) alertMsg += `Mensaje: ${message}\n`;
+        alertMsg += `\n✅ Revisa estos datos y contacta al interesado.`;
+
+        alert(alertMsg);
+        console.log('Consulta privada:', { name, email, phone, message });
         contactForm.reset();
     });
 }
+
+// ==================== COMENTARIOS PÚBLICOS (localStorage) ====================
+let comments = [];
+
+function loadComments() {
+    const stored = localStorage.getItem('eg_public_comments');
+    if (stored) {
+        try {
+            comments = JSON.parse(stored);
+        } catch(e) { comments = []; }
+    } else {
+        // Comentarios de ejemplo para mostrar que funciona
+        comments = [
+            {
+                name: "María Rodríguez",
+                phone: "+58 412-1234567",
+                comment: "Excelente curso, muy práctico. Aprendí mucho sobre Python aplicado a producción.",
+                date: new Date().toLocaleString()
+            },
+            {
+                name: "Carlos Méndez",
+                phone: "+58 424-7654321",
+                comment: "¿Tienen material para aprender sobre simulación de yacimientos? Me interesaría.",
+                date: new Date().toLocaleString()
+            }
+        ];
+        saveComments();
+    }
+    renderComments();
+}
+
+function saveComments() {
+    localStorage.setItem('eg_public_comments', JSON.stringify(comments));
+}
+
+function renderComments() {
+    const commentsList = document.getElementById('commentsList');
+    if (!commentsList) return;
+
+    if (comments.length === 0) {
+        commentsList.innerHTML = '<div class="empty-comments">No hay comentarios aún. ¡Sé el primero en dejar tu opinión!</div>';
+        return;
+    }
+
+    commentsList.innerHTML = comments.map(comment => `
+        <div class="comment-card">
+            <div class="comment-header">
+                <span class="comment-name">${escapeHtml(comment.name)}</span>
+                ${comment.phone ? `<span class="comment-phone"><i class="fas fa-phone-alt"></i> ${escapeHtml(comment.phone)}</span>` : ''}
+                <span class="comment-date">${escapeHtml(comment.date)}</span>
+            </div>
+            <div class="comment-text">${escapeHtml(comment.comment)}</div>
+        </div>
+    `).join('');
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+        return c;
+    });
+}
+
+function addComment(name, phone, comment) {
+    if (!name || !comment) {
+        alert('Por favor ingresa tu nombre y el comentario.');
+        return false;
+    }
+    const newComment = {
+        name: name.trim(),
+        phone: phone ? phone.trim() : '',
+        comment: comment.trim(),
+        date: new Date().toLocaleString()
+    };
+    comments.unshift(newComment); // Los más nuevos arriba
+    saveComments();
+    renderComments();
+    return true;
+}
+
+// Evento para publicar comentario
+const submitCommentBtn = document.getElementById('submitCommentBtn');
+if (submitCommentBtn) {
+    submitCommentBtn.addEventListener('click', () => {
+        const nameInput = document.getElementById('publicName');
+        const phoneInput = document.getElementById('publicPhone');
+        const commentInput = document.getElementById('publicComment');
+
+        const name = nameInput ? nameInput.value.trim() : '';
+        const phone = phoneInput ? phoneInput.value.trim() : '';
+        const comment = commentInput ? commentInput.value.trim() : '';
+
+        if (addComment(name, phone, comment)) {
+            if (nameInput) nameInput.value = '';
+            if (phoneInput) phoneInput.value = '';
+            if (commentInput) commentInput.value = '';
+            alert('¡Comentario publicado! Aparecerá en la lista.');
+        }
+    });
+}
+
+// Cargar comentarios al inicio
+loadComments();
